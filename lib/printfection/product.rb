@@ -1,24 +1,7 @@
 module Printfection
-  class Product
-
-    def initialize(data)
-      @data = data
-    end
-
-    def id
-      data[:id].to_i
-    end
-
-    def name
-      data[:name]
-    end
-
-    private
-
-    def data
-      @data
-    end
-
+  class Product < Resource
+    expose :id,   :as => :integer
+    expose :name, :as => :string
   end
 end
 

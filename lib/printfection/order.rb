@@ -1,5 +1,5 @@
 module Printfection
-  class Order
+  class Order < Resource
     STATUS_CODES = {
       "unknown"   => -2,
       "cancelled" => -1,
@@ -11,21 +11,13 @@ module Printfection
       "completed" => 5
     }
 
-    def initialize(data)
-      @data = data
-    end
-
-    def id
-      data[:id].to_i
-    end
-
-    def created_at
-      DateTime.parse(data[:created_at])
-    end
-
-    def campaign_id
-      data[:campaign_id].to_i
-    end
+    expose :id,           :as => :integer
+    expose :campaign_id,  :as => :integer
+    expose :created_at,   :as => :datetime
+    expose :code
+    expose :url
+    expose :gift,         :as => :boolean
+    expose :gift_message
 
     def status
       data[:status].downcase
@@ -63,34 +55,12 @@ module Printfection
       status_code == 5
     end
 
-    def code
-      data[:code]
-    end
-
-    def url
-      data[:url]
-    end
-
-    def gift?
-      data[:gift]
-    end
-
-    def gift_message
-      data[:gift_message]
-    end
-
     def ship_to
       OpenStruct.new(data[:ship_to])
     end
 
     def manifest
       Manifest.new(data[:manifest])
-    end
-
-    private
-
-    def data
-      @data
     end
 
   end

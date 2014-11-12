@@ -1,36 +1,13 @@
 module Printfection
-  class Item
-
-    def initialize(data)
-      @data = data
-    end
-
-    def id
-      data[:id].to_i
-    end
-
-    def name
-      data[:name]
-    end
-
-    def color
-      data[:color]
-    end
-
-    def created_at
-      DateTime.parse(data[:created_at])
-    end
+  class Item < Resource
+    expose :id,   :as => :integer
+    expose :name, :as => :string
+    expose :created_at, :as => :datetime
+    expose :color, :as => :string
 
     def product
       Product.new(data[:product])
     end
-
-    private
-
-    def data
-      @data
-    end
-
   end
 end
 

@@ -1,44 +1,12 @@
 module Printfection
-  class Campaign
-
-    def initialize(data)
-      @data = data
-    end
-
-    def id
-      data[:id].to_i
-    end
-
-    def name
-      data[:name]
-    end
-
-    def type
-      data[:type]
-    end
-
-    def created_at
-      DateTime.parse(data[:created_at])
-    end
-
-    def active?
-      data[:active]
-    end
-
-    def archived?
-      data[:archived]
-    end
-
-    def url
-      data[:url]
-    end
-
-    private
-
-    def data
-      @data
-    end
-
+  class Campaign < Resource
+    expose :id,         :as => :integer
+    expose :name,       :as => :string
+    expose :type,       :as => :string
+    expose :url
+    expose :created_at, :as => :datetime
+    expose :active,     :as => :boolean
+    expose :archived,   :as => :boolean
   end
 end
 
