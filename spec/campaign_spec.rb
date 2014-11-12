@@ -53,8 +53,8 @@ module Printfection
 
   describe Campaign, "#url" do
     it "returns the web URL for the campaign" do
-      campaign = Campaign.new url: "https://get.printfection.com/i8kbn/6651657281"
-      expect(campaign.url).to eql "https://get.printfection.com/i8kbn/6651657281"
+      campaign = Campaign.new url: "https://printfection.com/campaign/123"
+      expect(campaign.url).to eql "https://printfection.com/campaign/123"
     end
   end
 
