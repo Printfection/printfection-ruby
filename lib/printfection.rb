@@ -1,6 +1,9 @@
+require "ostruct"
+
 require "printfection/version"
-require 'printfection/item'
-require 'printfection/product'
+require "printfection/product"
+require "printfection/size"
+require "printfection/item"
 
 module Printfection
 end

@@ -1,5 +1,5 @@
 module Printfection
-  class Product
+  class Size
 
     def initialize(data)
       @data = data
@@ -11,6 +11,14 @@ module Printfection
 
     def name
       data[:name]
+    end
+
+    def short_name
+      data[:short_name]
+    end
+
+    def stock
+      OpenStruct.new(data[:stock])
     end
 
     private
