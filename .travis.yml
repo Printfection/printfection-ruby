@@ -1,0 +1,11 @@
+language: ruby
+rvm:
+  - 2.1.0
+  - jruby-19mode
+  - rbx-2
+  - ruby-head
+  - jruby-head
+notifications:
+  recipients:
+    - casey.ohara@printfection.com
+
