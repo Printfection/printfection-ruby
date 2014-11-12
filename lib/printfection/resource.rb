@@ -16,6 +16,8 @@ module Printfection
         expose_string(attribute)
       when :datetime
         expose_datetime(attribute)
+      when :object
+        expose_object(attribute)
       else
         expose_raw(attribute)
       end
@@ -69,6 +71,14 @@ module Printfection
       class_eval(<<-EOS, __FILE__, __LINE__ + 1)
          def #{attribute}(&block)
            DateTime.parse(data[:#{attribute}])
+         end
+      EOS
+    end
+
+    def self.expose_object(attribute)
+      class_eval(<<-EOS, __FILE__, __LINE__ + 1)
+         def #{attribute}(&block)
+           OpenStruct.new(data[:#{attribute}])
          end
       EOS
     end

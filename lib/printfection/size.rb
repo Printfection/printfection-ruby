@@ -3,11 +3,7 @@ module Printfection
     expose :id,   :as => :integer
     expose :name, :as => :string
     expose :short_name, :as => :string
-
-    def stock
-      OpenStruct.new(data[:stock])
-    end
-
+    expose :stock, :as => :object
   end
 end
 

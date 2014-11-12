@@ -1,11 +1,8 @@
 module Printfection
   class Image < Resource
-    expose :id,   :as => :integer
-    expose :name, :as => :string
-
-    def assets
-      OpenStruct.new(data[:assets])
-    end
+    expose :id,     :as => :integer
+    expose :name,   :as => :string
+    expose :assets, :as => :object
   end
 end
 

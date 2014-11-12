@@ -18,6 +18,7 @@ module Printfection
     expose :url
     expose :gift,         :as => :boolean
     expose :gift_message
+    expose :ship_to,      :as => :object
 
     def status
       data[:status].downcase
@@ -53,10 +54,6 @@ module Printfection
 
     def completed?
       status_code == 5
-    end
-
-    def ship_to
-      OpenStruct.new(data[:ship_to])
     end
 
     def manifest
