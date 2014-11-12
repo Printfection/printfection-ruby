@@ -3,13 +3,13 @@ require 'printfection'
 module Printfection
   describe Item, "#id" do
     it "returns the item's id" do
-      item = Item.new id: 1
-      expect(item.id).to eql 1
+      item = Item.new id: 123
+      expect(item.id).to eql 123
     end
 
     it "returns an integer" do
-      item = Item.new id: "1"
-      expect(item.id).to eql 1
+      item = Item.new id: "123"
+      expect(item.id).to eql 123
     end
   end
 
@@ -37,7 +37,7 @@ module Printfection
   end
 
   describe Item, "#product" do
-    it "returns an object with information about the item's root product" do
+    it "returns a Product instance with information about the item's root product" do
       product = double
       product_data = double
       item = Item.new product: product_data

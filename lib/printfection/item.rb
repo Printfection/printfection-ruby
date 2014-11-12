@@ -1,5 +1,6 @@
 module Printfection
   class Item
+
     def initialize(data)
       @data = data
     end
