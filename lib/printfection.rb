@@ -1,6 +1,7 @@
 require "ostruct"
 
 require "printfection/version"
+require "printfection/util"
 require "printfection/resource"
 require "printfection/product"
 require "printfection/size"

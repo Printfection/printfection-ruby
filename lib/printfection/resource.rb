@@ -4,6 +4,7 @@ module Printfection
     def self.expose(attribute, options={})
       attribute = attribute.to_s
       type = options[:as]
+      readonly = options[:readonly]
 
       case type
       when :boolean
@@ -21,6 +22,10 @@ module Printfection
       else
         expose_raw(attribute)
       end
+
+      unless readonly
+        expose_setter(attribute)
+      end
     end
 
     def self.expose_raw(attribute)
@@ -34,7 +39,7 @@ module Printfection
     def self.expose_boolean(attribute)
       class_eval(<<-EOS, __FILE__, __LINE__ + 1)
          def #{attribute}(&block)
-           data[:#{attribute}] == true
+           Util.to_bool(data[:#{attribute}])
          end
 
          def #{attribute}?(&block)
@@ -83,7 +88,15 @@ module Printfection
       EOS
     end
 
-    def initialize(data)
+    def self.expose_setter(attribute)
+      class_eval(<<-EOS, __FILE__, __LINE__ + 1)
+         def #{attribute}=(value, &block)
+           data[:#{attribute}] = value
+         end
+      EOS
+    end
+
+    def initialize(data={})
       @data = data
     end
 
