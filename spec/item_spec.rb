@@ -1,6 +1,29 @@
 require 'printfection'
 
 module Printfection
+  describe Item, ".retrieve" do
+    it "returns the Item for the given id" do
+      data = double
+      item = double
+      expect(Printfection).to receive(:get).with("/items/123").and_return(data)
+      expect(Item).to receive(:new).with(data).and_return(item)
+      expect(Item.retrieve(123)).to eql item
+    end
+  end
+
+  describe Item, ".list" do
+    it "returns an array of Items" do
+      data1, data2 = double, double
+      item1, item2 = double, double
+
+      expect(Printfection).to receive(:get).with("/items").and_return([data1, data2])
+      expect(Item).to receive(:new).with(data1).and_return(item1)
+      expect(Item).to receive(:new).with(data2).and_return(item2)
+
+      expect(Item.list).to eql [item1, item2]
+    end
+  end
+
   describe Item, "#id" do
     it "returns the item's id" do
       item = Item.new id: 123
