@@ -1,5 +1,32 @@
 module Printfection
   class Resource
+    module Operations
+      module Retrieve
+        module ClassMethods
+          def retrieve(id)
+            new Printfection.get [self.url, id].join("/")
+          end
+        end
+
+        def self.included(base)
+          base.extend(ClassMethods)
+        end
+      end
+
+      module List
+        module ClassMethods
+          def list
+            Printfection.get(self.url).map do |response|
+              new response
+            end
+          end
+        end
+
+        def self.included(base)
+          base.extend(ClassMethods)
+        end
+      end
+    end
 
     def self.expose(attribute, options={})
       attribute = attribute.to_s

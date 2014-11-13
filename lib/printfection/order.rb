@@ -1,5 +1,8 @@
 module Printfection
   class Order < Resource
+    include Operations::Retrieve
+    include Operations::List
+
     STATUS_CODES = {
       "unknown"   => -2,
       "cancelled" => -1,
@@ -20,14 +23,8 @@ module Printfection
     expose :gift_message
     expose :ship_to,      :as => :object
 
-    def self.retrieve(id)
-      Order.new Printfection.get("/orders/#{id.to_i}")
-    end
-
-    def self.list
-      Printfection.get("/orders").map do |d|
-        Order.new(d)
-      end
+    def self.url
+      "/orders"
     end
 
     def self.create(data)
