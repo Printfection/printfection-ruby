@@ -1,9 +1,9 @@
 module Printfection
   class Item < Resource
-    expose :id,   :as => :integer
-    expose :name, :as => :string
-    expose :created_at, :as => :datetime
-    expose :color, :as => :string
+    expose :id,         :as => :integer,  :readonly => true
+    expose :name,       :as => :string,   :readonly => true
+    expose :color,      :as => :string,   :readonly => true
+    expose :created_at, :as => :datetime, :readonly => true
 
     def product
       Product.new(data[:product])

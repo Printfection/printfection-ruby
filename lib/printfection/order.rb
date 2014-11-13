@@ -11,11 +11,11 @@ module Printfection
       "completed" => 5
     }
 
-    expose :id,           :as => :integer
+    expose :id,           :as => :integer, :readonly => true
     expose :campaign_id,  :as => :integer
-    expose :created_at,   :as => :datetime
-    expose :code
-    expose :url
+    expose :created_at,   :as => :datetime, :readonly => true
+    expose :code,         :readonly => true
+    expose :url,          :readonly => true
     expose :gift,         :as => :boolean
     expose :gift_message
     expose :ship_to,      :as => :object
