@@ -1,6 +1,87 @@
 require 'printfection'
 
 module Printfection
+  describe Order, ".retrieve" do
+    it "returns the Order for the given id" do
+      data = double
+      order = double
+      expect(Printfection).to receive(:get).with("/orders/123").and_return(data)
+      expect(Order).to receive(:new).with(data).and_return(order)
+      expect(Order.retrieve(123)).to eql order
+    end
+  end
+
+  describe Order, ".list" do
+    it "returns an array of Orders" do
+      data1, data2 = double, double
+      order1, order2 = double, double
+
+      expect(Printfection).to receive(:get).with("/orders").and_return([data1, data2])
+      expect(Order).to receive(:new).with(data1).and_return(order1)
+      expect(Order).to receive(:new).with(data2).and_return(order2)
+
+      expect(Order.list).to eql [order1, order2]
+    end
+  end
+
+  describe Order, "#create" do
+    it "creates, saves, and returns a new Order with the data" do
+      order_data = double
+      new_order = double
+      expect(Order).to receive(:new).with(order_data).and_return(new_order)
+      expect(new_order).to receive(:save).and_return(true)
+      returned_order = Order.create(order_data)
+      expect(returned_order).to eql new_order
+    end
+  end
+
+  describe Order, "#save" do
+    context "when it has an id" do
+      it "performs a patch with the data" do
+        order = Order.new(:id => 123)
+        order.gift_message = "My awesome gift message!"
+        expect(Printfection).to receive(:patch).
+                                with("/orders/123", {:gift_message => "My awesome gift message!"})
+        order.save
+      end
+    end
+
+    context "when it doesn't have an id" do
+      it "performs a post with the data" do
+        order = Order.new
+        order.gift_message = "My awesome gift message!"
+        expect(Printfection).to receive(:post).
+                                with("/orders", {:gift_message => "My awesome gift message!"})
+        order.save
+      end
+    end
+  end
+
+  describe Order, "#place" do
+    it "performs a post to place the order" do
+      order = Order.new(:id => 123)
+      expect(Printfection).to receive(:post).
+                              with("/orders/123/place")
+      order.place
+    end
+
+    context "when it is a new order" do
+      it "raises an exception" do
+        order = Order.new
+        expect(order).to receive(:new?).and_return(true)
+        expect { order.place }.to raise_exception
+      end
+    end
+  end
+
+  describe Order, "#cancel" do
+    it "performs a delete on the order" do
+      order = Order.new(:id => 123)
+      expect(Printfection).to receive(:delete).with("/orders/123")
+      order.cancel
+    end
+  end
+
   describe Order, "#id" do
     it "returns the order's id" do
       order = Order.new id: 123

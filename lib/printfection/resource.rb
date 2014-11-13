@@ -97,13 +97,22 @@ module Printfection
     end
 
     def initialize(data={})
-      @data = data
+      @clean_data = data.dup
+      @dirty_data = data.dup
     end
 
     private
 
     def data
-      @data
+      dirty_data
+    end
+
+    def dirty_data
+      @dirty_data
+    end
+
+    def clean_data
+      @clean_data
     end
   end
 end

@@ -13,5 +13,20 @@ require "printfection/line_item"
 require "printfection/manifest"
 
 module Printfection
+  def self.get(url)
+    raise "Not Implemented"
+  end
+
+  def self.post(url, data={})
+    raise "Not Implemented"
+  end
+
+  def self.patch(url, data={})
+    raise "Not Implemented"
+  end
+
+  def self.delete(url)
+    raise "Not Implemented"
+  end
 end
 

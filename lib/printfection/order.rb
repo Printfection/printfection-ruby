@@ -20,6 +20,54 @@ module Printfection
     expose :gift_message
     expose :ship_to,      :as => :object
 
+    def self.retrieve(id)
+      Order.new Printfection.get("/orders/#{id.to_i}")
+    end
+
+    def self.list
+      Printfection.get("/orders").map do |d|
+        Order.new(d)
+      end
+    end
+
+    def self.create(data)
+      order = Order.new(data)
+      order.save
+      order
+    end
+
+    def save
+      if new?
+        Printfection.post("/orders", changes)
+      else
+        Printfection.patch("/orders/#{id.to_i}", changes)
+      end
+    end
+
+    def place
+      raise "Orders must be saved before they can be placed" if new?
+      Printfection.post("/orders/#{id.to_i}/place")
+    end
+
+    def cancel
+      Printfection.delete("/orders/#{id.to_i}")
+    end
+
+    def new?
+      return true if id.zero?
+      return true if id.nil?
+      return false
+    end
+
+    def changes
+      dirty_data.keys.inject({}) do |diff, key|
+        unless dirty_data[key] == clean_data[key]
+          diff[key] = dirty_data[key]
+        end
+        diff
+      end
+    end
+
     def status
       data[:status].downcase
     end
