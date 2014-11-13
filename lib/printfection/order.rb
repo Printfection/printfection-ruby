@@ -1,10 +1,10 @@
 module Printfection
   class Order < Resource
-    include Operations::Retrieve
-    include Operations::List
-    include Operations::Create
-    include Operations::Update
-    include Operations::Delete
+    include Actions::Retrieve
+    include Actions::List
+    include Actions::Create
+    include Actions::Update
+    include Actions::Delete
 
     expose :id,           :as => :integer, :readonly => true
     expose :campaign_id,  :as => :integer

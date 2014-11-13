@@ -1,7 +1,7 @@
 module Printfection
   class Item < Resource
-    include Operations::Retrieve
-    include Operations::List
+    include Actions::Retrieve
+    include Actions::List
 
     expose :id,         :as => :integer,  :readonly => true
     expose :name,       :as => :string,   :readonly => true

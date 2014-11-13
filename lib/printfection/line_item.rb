@@ -1,9 +1,9 @@
 module Printfection
   class LineItem < Resource
-    include Operations::Retrieve
-    include Operations::Create
-    include Operations::Update
-    include Operations::Delete
+    include Actions::Retrieve
+    include Actions::Create
+    include Actions::Update
+    include Actions::Delete
 
     expose :id,         :as => :integer, :readonly => true
     expose :order_id,   :as => :integer

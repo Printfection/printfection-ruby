@@ -1,6 +1,6 @@
 module Printfection
   class Resource
-    module Operations
+    module Actions
       module Retrieve
         module ClassMethods
           def retrieve(id)
