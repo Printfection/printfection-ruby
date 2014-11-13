@@ -26,6 +26,30 @@ module Printfection
           base.extend(ClassMethods)
         end
       end
+
+      module Create
+        module ClassMethods
+          def create(params)
+            new Printfection.post(self.url, params)
+          end
+        end
+
+        def self.included(base)
+          base.extend(ClassMethods)
+        end
+      end
+
+      module Update
+        def save
+          Printfection.patch [self.class.url, id].join("/"), changes
+        end
+      end
+
+      module Delete
+        def delete
+          Printfection.delete [self.class.url, id].join("/")
+        end
+      end
     end
 
     def self.expose(attribute, options={})
@@ -128,8 +152,6 @@ module Printfection
       @dirty_data = data.dup
     end
 
-    private
-
     def data
       dirty_data
     end
@@ -141,6 +163,16 @@ module Printfection
     def clean_data
       @clean_data
     end
+
+    def changes
+      dirty_data.keys.inject({}) do |diff, key|
+        unless dirty_data[key] == clean_data[key]
+          diff[key] = dirty_data[key]
+        end
+        diff
+      end
+    end
+
   end
 end
 

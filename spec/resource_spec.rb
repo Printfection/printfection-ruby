@@ -93,8 +93,24 @@ module Printfection
       expect(instance.my_object_attribute.name).to eql "Shirt"
       expect(instance.my_object_attribute.price).to eql 123.45
     end
+  end
 
+  describe Resource, "#changes" do
+    it "returns a hash of the changed attributes" do
+      klass = Class.new(Resource) do
+        expose :size
+        expose :color
+        expose :price
+      end
 
+      resource = klass.new(size: "Large", color: "Blue", price: 123.45)
+      resource.price = 678.90
+      expect(resource.changes).to eql({:price => 678.90})
+      resource.size = "Medium"
+      expect(resource.changes).to eql({:price => 678.90, :size => "Medium"})
+      resource.price = 123.45
+      expect(resource.changes).to eql({:size => "Medium"})
+    end
   end
 end
 

@@ -2,17 +2,9 @@ module Printfection
   class Order < Resource
     include Operations::Retrieve
     include Operations::List
-
-    STATUS_CODES = {
-      "unknown"   => -2,
-      "cancelled" => -1,
-      "open"      => 0,
-      "received"  => 1,
-      "approved"  => 2,
-      "processed" => 3,
-      "shipped"   => 4,
-      "completed" => 5
-    }
+    include Operations::Create
+    include Operations::Update
+    include Operations::Delete
 
     expose :id,           :as => :integer, :readonly => true
     expose :campaign_id,  :as => :integer
@@ -27,43 +19,24 @@ module Printfection
       "/orders"
     end
 
-    def self.create(data)
-      order = Order.new(data)
-      order.save
-      order
-    end
-
-    def save
-      if new?
-        Printfection.post("/orders", changes)
-      else
-        Printfection.patch("/orders/#{id.to_i}", changes)
-      end
-    end
-
     def place
-      raise "Orders must be saved before they can be placed" if new?
-      Printfection.post("/orders/#{id.to_i}/place")
+      Printfection.post("/orders/#{id}/place")
     end
 
     def cancel
-      Printfection.delete("/orders/#{id.to_i}")
+      delete
     end
 
-    def new?
-      return true if id.zero?
-      return true if id.nil?
-      return false
-    end
-
-    def changes
-      dirty_data.keys.inject({}) do |diff, key|
-        unless dirty_data[key] == clean_data[key]
-          diff[key] = dirty_data[key]
-        end
-        diff
-      end
-    end
+    STATUS_CODES = {
+      "unknown"   => -2,
+      "cancelled" => -1,
+      "open"      => 0,
+      "received"  => 1,
+      "approved"  => 2,
+      "processed" => 3,
+      "shipped"   => 4,
+      "completed" => 5
+    }
 
     def status
       data[:status].downcase
