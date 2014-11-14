@@ -18,8 +18,6 @@ module Printfection
       request :delete, url
     end
 
-    private
-
     def request(verb, url, params={})
       begin
         url = [BASE_URL.chomp("/"), url.chomp("/").reverse.chomp("/").reverse].join("/")
