@@ -104,3 +104,56 @@ describe Printfection, ".post" do
   end
 end
 
+describe Printfection, ".patch" do
+  context "when it is successful" do
+    let(:input_json)  { double(:input_json) }
+    let(:input_data)  { double(:input_data, :to_json => input_json) }
+    let(:raw_json)    { double(:raw_json) }
+    let(:response)    { double(:response, :body => raw_json) }
+    let(:parsed_json) { double(:parsed_json) }
+
+    before do
+      allow(RestClient).to receive(:patch).
+                           with("https://api.printfection.com/v2/path/to/resource/123", input_json, {:accept => :json, :content_type => :json}).
+                           and_return(response)
+    end
+
+    context "when it can be parsed" do
+      before do
+        allow(JSON).to receive(:parse).
+                       with(raw_json).
+                       and_return(parsed_json)
+      end
+
+      it "returns the parsed JSON" do
+        json = Printfection.patch("/path/to/resource/123", input_data)
+        expect(json).to eql parsed_json
+      end
+    end
+
+    context "when it cannot be parsed" do
+      before do
+        allow(JSON).to receive(:parse).
+                       with(raw_json).
+                       and_raise(JSON::ParserError)
+      end
+
+      it "raises Error" do
+        expect {
+          Printfection.patch("/path/to/resource/123", input_data)
+        }.to raise_error Printfection::Error
+      end
+    end
+  end
+
+  context "when it is not successful" do
+    it "raises Error" do
+      allow(RestClient).to receive(:patch).
+                           and_raise(RestClient::ResourceNotFound)
+      expect {
+        Printfection.patch("/path/to/resource/123", {})
+      }.to raise_error Printfection::Error
+    end
+  end
+end
+
