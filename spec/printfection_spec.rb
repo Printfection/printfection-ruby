@@ -8,7 +8,7 @@ describe Printfection, ".get" do
 
     before do
       allow(RestClient).to receive(:get).
-                           with("https://api.printfection.com/v2/path/to/resource/123", {:accept => :json}).
+                           with("https://api.printfection.com/v2/path/to/resource/123", {:params => {:page => 5}, :accept => :json}).
                            and_return(response)
     end
 
@@ -20,7 +20,7 @@ describe Printfection, ".get" do
       end
 
       it "returns the parsed JSON" do
-        json = Printfection.get("/path/to/resource/123")
+        json = Printfection.get("/path/to/resource/123", page: 5)
         expect(json).to eql parsed_json
       end
     end
@@ -34,7 +34,7 @@ describe Printfection, ".get" do
 
       it "raises Error" do
         expect {
-          Printfection.get("/path/to/resource/123")
+          Printfection.get("/path/to/resource/123", page: 5)
         }.to raise_error Printfection::Error
       end
     end

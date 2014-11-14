@@ -18,11 +18,11 @@ module Printfection
   class Error < StandardError
   end
 
-  def self.get(url="/")
+  def self.get(url="/", params={})
     begin
       base_url = "https://api.printfection.com/v2/"
       url = [base_url.chomp("/"), url.chomp("/").reverse.chomp("/").reverse].join("/")
-      response = RestClient.get(url, :accept => :json)
+      response = RestClient.get(url, :params => params, :accept => :json)
       body = response.body
       json = JSON.parse(response.body)
       return json
