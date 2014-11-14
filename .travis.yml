@@ -1,10 +1,11 @@
 language: ruby
 rvm:
-  - 2.1.0
-  - jruby-19mode
-  - rbx-2
   - ruby-head
+  - ruby-2.0.0-p598
+  - ruby-1.9.3-p551
   - jruby-head
+  - jruby-19mode
+  - rbx-2.2.7
 notifications:
   recipients:
     - casey.ohara@printfection.com
