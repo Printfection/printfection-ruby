@@ -32,7 +32,7 @@ module Printfection
         when :delete
           RestClient.delete url
         else
-          raise "Unknown HTTP verb: #{verb}"
+          raise RequestError, "Unknown HTTP verb: '#{verb}'"
         end
 
         json = JSON.parse(response.body)
@@ -43,6 +43,11 @@ module Printfection
         #
         # We determine the type of error, and re-raise
         # our own error from the message in the response body.
+      rescue RequestError => e
+        # This error happens somewhere between the internal API and RestClient,
+        # before the request is ever sent.
+        # Re-wrap as a generic Error with the same message.
+        raise Error, e.message
       rescue RestClient::Exception => e
         # We likely got a http status code outside the 200-399 range.
         # If this is a GET or DELETE request, it is likely the resource is not owned by the client.
@@ -53,7 +58,7 @@ module Printfection
         # 401 Unauthorized - Invalid API key provided.
         # 404 Not Found    - The requested item doesn't exist or the client doesn't own it.
         if [400, 401, 404].include?(e.http_code)
-          raise Error, JSON.parse(e.response.body)["message"]
+          raise Error, JSON.parse(e.http_body)["message"]
         end
 
         # Handle any other http error (i.e. 5xx+), or other RestClient exceptions.

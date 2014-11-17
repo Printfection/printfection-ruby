@@ -88,6 +88,14 @@ module Printfection
       end
     end
 
+    context "when it is an invalid http request verb" do
+      it "raises an exception" do
+        expect {
+          client.request(:invalid_request_type, "/path/to/resource/123")
+        }.to raise_error Error, "Unknown HTTP verb: 'invalid_request_type'"
+      end
+    end
+
     context "when it is successful" do
       let(:raw_json)    { double(:raw_json) }
       let(:response)    { double(:response, :body => raw_json) }
@@ -128,12 +136,40 @@ module Printfection
     end
 
     context "when it is not successful" do
-      it "raises Error" do
-        allow(RestClient).to receive(:get).
-          and_raise(RestClient::ResourceNotFound)
-        expect {
-          client.request(:get, "/path/to/resource/123")
-        }.to raise_error Printfection::Error
+      context "when it is a known http status code" do
+        it "raises an Error with the appropriate message" do
+          response = double(:response, code: 400, body: '{"message":"Invalid or missing request parameters."}')
+          allow(RestClient).to receive(:get).and_raise(RestClient::Exception.new(response))
+          expect { client.request(:get, "/path/to/resource/123") }.to raise_error Printfection::Error, "Invalid or missing request parameters."
+
+          response = double(:response, code: 401, body: '{"message":"Invalid API key provided."}')
+          allow(RestClient).to receive(:get).and_raise(RestClient::Exception.new(response))
+          expect { client.request(:get, "/path/to/resource/123") }.to raise_error Printfection::Error, "Invalid API key provided."
+
+          response = double(:response, code: 404, body: '{"message":"Not Found."}')
+          allow(RestClient).to receive(:get).and_raise(RestClient::Exception.new(response))
+          expect { client.request(:get, "/path/to/resource/123") }.to raise_error Printfection::Error, "Not Found."
+        end
+      end
+
+      context "when it is an unknown http status code" do
+        it "raises an Error with a generic message" do
+          allow(RestClient).to receive(:get).
+            and_raise(RestClient::Exception)
+          expect {
+            client.request(:get, "/path/to/resource/123")
+          }.to raise_error Printfection::Error, "Something went wrong with the request. Please try again."
+        end
+      end
+
+      context "when an unknown exception is raised" do
+        it "raises an Error with a generic message" do
+          allow(RestClient).to receive(:get).
+            and_raise(StandardError)
+          expect {
+            client.request(:get, "/path/to/resource/123")
+          }.to raise_error Printfection::Error, "Something went wrong. Please try again."
+        end
       end
     end
   end
