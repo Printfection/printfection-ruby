@@ -10,8 +10,8 @@ module Printfection
       when NilClass
         return false
       when String
-        return true if value == true || value =~ (/^(true|t|yes|y|1)$/i)
-        return false if value == false || value.blank? || value =~ (/^(false|f|no|n|0)$/i)
+        return true if value == true || value =~ (/^(true|1)$/i)
+        return false if value == false || value.empty? || value =~ (/^(false|0)$/i)
         raise ArgumentError.new("invalid value for Boolean: \"#{value}\"")
       when Fixnum
         return true if value == 1
