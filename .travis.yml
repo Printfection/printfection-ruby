@@ -5,8 +5,7 @@ rvm:
   - ruby-1.9.3-p551
   - jruby-head
   - jruby-19mode
-  - rbx-2.2.7
 notifications:
   recipients:
-    - casey.ohara@printfection.com
+    - rubygems@printfection.com
 
