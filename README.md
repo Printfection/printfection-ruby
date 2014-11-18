@@ -1,4 +1,4 @@
-# Printfection Ruby API [![Build Status](https://travis-ci.org/Printfection/printfection-ruby.png?branch=prerelease)](https://travis-ci.org/Printfection/printfection-ruby)
+# Printfection Ruby API [![Build Status](https://travis-ci.org/Printfection/printfection-ruby.png?branch=prerelease)](https://travis-ci.org/Printfection/printfection-ruby) [![Code Climate](https://codeclimate.com/github/Printfection/printfection-ruby/badges/gpa.svg)](https://codeclimate.com/github/Printfection/printfection-ruby) [![Test Coverage](https://codeclimate.com/github/Printfection/printfection-ruby/badges/coverage.svg)](https://codeclimate.com/github/Printfection/printfection-ruby)
 
 Implementation of the [Printfection API](http://printfection.github.io/API-Documentation) for Ruby.
 
