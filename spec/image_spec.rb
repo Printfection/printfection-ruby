@@ -1,25 +1,18 @@
 require 'printfection'
 
 module Printfection
-  describe Image, "#id" do
-    it "returns the image's id" do
-      image = Image.new id: 123
-      expect(image.id).to eql 123
+  describe Image, "attributes" do
+    it "exposes its id" do
+      expect(Image).to expose_integer :id
     end
 
-    it "returns an integer" do
-      image = Image.new id: "123"
-      expect(image.id).to eql 123
+    it "exposes its name" do
+      expect(Image).to expose_string :name
     end
   end
+end
 
-  describe Image, "#name" do
-    it "returns the name of the image" do
-      image = Image.new name: "front"
-      expect(image.name).to eql "front"
-    end
-  end
-
+module Printfection
   describe Image, "#assets" do
     it "returns an object that contains information about the image's assets" do
       image = Image.new assets: { product: "https://images.printfection.com/ae90asdf.jpg",

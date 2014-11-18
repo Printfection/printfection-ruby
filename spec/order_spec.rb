@@ -1,6 +1,39 @@
 require 'printfection'
 
 module Printfection
+  describe Order, "attributes" do
+    it "exposes its id" do
+      expect(Order).to expose_integer :id
+    end
+
+    it "exposes its campaign_id" do
+      expect(Order).to expose_integer :campaign_id
+    end
+
+    it "exposes its created_at" do
+      expect(Order).to expose_datetime :created_at
+    end
+
+    it "exposes its code" do
+      expect(Order).to expose :code
+    end
+
+    it "exposes its url" do
+      expect(Order).to expose :url
+    end
+
+    it "exposes its gift" do
+      expect(Order).to expose_boolean :gift
+    end
+
+    it "exposes its gift_message" do
+      expect(Order).to expose :gift_message
+    end
+  end
+end
+
+
+module Printfection
   describe Order, ".retrieve" do
     it "returns the Order for the given id" do
       data = double
@@ -75,39 +108,6 @@ module Printfection
       order = Order.new(:id => 123)
       expect(order).to receive(:delete)
       order.cancel
-    end
-  end
-
-  describe Order, "#id" do
-    it "returns the order's id" do
-      order = Order.new id: 123
-      expect(order.id).to eql 123
-    end
-
-    it "returns an integer" do
-      order = Order.new id: "123"
-      expect(order.id).to eql 123
-    end
-  end
-
-  describe Order, "#created_at" do
-    it "returns a DateTime for when the order was created" do
-      date_str = "2014-09-12T10:22:37Z"
-      parsed_date = DateTime.parse(date_str)
-      order = Order.new created_at: date_str
-      expect(order.created_at).to eql parsed_date
-    end
-  end
-
-  describe Order, "#campaign_id" do
-    it "returns the order's campaign id" do
-      order = Order.new campaign_id: 456
-      expect(order.campaign_id).to eql 456
-    end
-
-    it "returns an integer" do
-      order = Order.new campaign_id: "456"
-      expect(order.campaign_id).to eql 456
     end
   end
 
@@ -236,54 +236,6 @@ module Printfection
     it "returns false when the order's status is not 'completed'" do
       order = Order.new status: "open"
       expect(order.completed?).to eql false
-    end
-  end
-
-  describe Order, "#code" do
-    it "returns the order's unique code that can be used for redemption" do
-      order = Order.new code: "xyz123"
-      expect(order.code).to eql "xyz123"
-    end
-
-    it "returns nil when the order doesn't have a redemption code" do
-      order = Order.new code: nil
-      expect(order.code).to eql nil
-    end
-  end
-
-  describe Order, "#url" do
-    it "returns the order's unique url that can be used for redemption" do
-      order = Order.new url: "https://printfection.com/order/123"
-      expect(order.url).to eql "https://printfection.com/order/123"
-    end
-
-    it "returns nil when the order doesn't have a redemption url" do
-      order = Order.new url: nil
-      expect(order.url).to eql nil
-    end
-  end
-
-  describe Order, "#gift?" do
-    it "returns true when the order is a gift" do
-      order = Order.new gift: true
-      expect(order.gift?).to eql true
-    end
-
-    it "returns false when the order is not a gift" do
-      order = Order.new gift: false
-      expect(order.gift?).to eql false
-    end
-  end
-
-  describe Order, "#gift_message" do
-    it "returns the order's gift message if it has one" do
-      order = Order.new gift_message: "Thanks for being awesome!"
-      expect(order.gift_message).to eql "Thanks for being awesome!"
-    end
-
-    it "returns nil if the order doesn't have a gift message" do
-      order = Order.new gift_message: nil
-      expect(order.gift_message).to eql nil
     end
   end
 

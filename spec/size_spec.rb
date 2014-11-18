@@ -1,32 +1,22 @@
 require 'printfection'
 
 module Printfection
-  describe Size, "#id" do
-    it "returns the size's id" do
-      size = Size.new id: 123
-      expect(size.id).to eql 123
+  describe Size, "attributes" do
+    it "exposes its id" do
+      expect(Size).to expose_integer :id
     end
 
-    it "returns an integer" do
-      size = Size.new id: "123"
-      expect(size.id).to eql 123
+    it "exposes its name" do
+      expect(Size).to expose_string :name
     end
-  end
 
-  describe Size, "#name" do
-    it "returns the full name of the size" do
-      size = Size.new name: "Medium"
-      expect(size.name).to eql "Medium"
+    it "exposes its short_name" do
+      expect(Size).to expose_string :short_name
     end
   end
+end
 
-  describe Size, "#short_name" do
-    it "returns the shortened name of the size" do
-      size = Size.new short_name: "M"
-      expect(size.short_name).to eql "M"
-    end
-  end
-
+module Printfection
   describe Size, "#stock" do
     it "returns an object that contains information about the size's stock" do
       size = Size.new stock: { available: 498 }

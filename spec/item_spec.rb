@@ -1,6 +1,32 @@
 require 'printfection'
 
 module Printfection
+  describe Item, ".url" do
+    it "returns the base resource url" do
+      expect(Item.url).to eql "/items"
+    end
+  end
+
+  describe Item, "attributes" do
+    it "exposes its id" do
+      expect(Item).to expose_integer :id
+    end
+
+    it "exposes its name" do
+      expect(Item).to expose_string :name
+    end
+
+    it "exposes its color" do
+      expect(Item).to expose_string :color
+    end
+
+    it "exposes its created_at" do
+      expect(Item).to expose_datetime :created_at
+    end
+  end
+end
+
+module Printfection
   describe Item, ".retrieve" do
     it "returns the Item for the given id" do
       data = double
@@ -21,41 +47,6 @@ module Printfection
       expect(Item).to receive(:new).with(data2).and_return(item2)
 
       expect(Item.list).to eql [item1, item2]
-    end
-  end
-
-  describe Item, "#id" do
-    it "returns the item's id" do
-      item = Item.new id: 123
-      expect(item.id).to eql 123
-    end
-
-    it "returns an integer" do
-      item = Item.new id: "123"
-      expect(item.id).to eql 123
-    end
-  end
-
-  describe Item, "#name" do
-    it "returns the name of the item" do
-      item = Item.new name: "My Awesome T-Shirt"
-      expect(item.name).to eql "My Awesome T-Shirt"
-    end
-  end
-
-  describe Item, "#color" do
-    it "returns the color of the item" do
-      item = Item.new color: "Green"
-      expect(item.color).to eql "Green"
-    end
-  end
-
-  describe Item, "#created_at" do
-    it "returns a DateTime for when the item was created" do
-      date_str = "2014-09-12T10:22:37Z"
-      parsed_date = DateTime.parse(date_str)
-      item = Item.new created_at: date_str
-      expect(item.created_at).to eql parsed_date
     end
   end
 
