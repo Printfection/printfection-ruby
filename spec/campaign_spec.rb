@@ -49,7 +49,7 @@ module Printfection
     end
   end
 
-  describe Campaign, ".list" do
+  describe Campaign, ".all" do
     it "returns an array of Campaigns" do
       data1, data2 = double, double
       campaign1, campaign2 = double, double
@@ -58,7 +58,7 @@ module Printfection
       expect(Campaign).to receive(:new).with(data1).and_return(campaign1)
       expect(Campaign).to receive(:new).with(data2).and_return(campaign2)
 
-      expect(Campaign.list).to eql [campaign1, campaign2]
+      expect(Campaign.all).to eql [campaign1, campaign2]
     end
   end
 end

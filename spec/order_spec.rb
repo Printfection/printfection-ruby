@@ -44,7 +44,7 @@ module Printfection
     end
   end
 
-  describe Order, ".list" do
+  describe Order, ".all" do
     it "returns an array of Orders" do
       data1, data2 = double, double
       order1, order2 = double, double
@@ -53,7 +53,7 @@ module Printfection
       expect(Order).to receive(:new).with(data1).and_return(order1)
       expect(Order).to receive(:new).with(data2).and_return(order2)
 
-      expect(Order.list).to eql [order1, order2]
+      expect(Order.all).to eql [order1, order2]
     end
   end
 

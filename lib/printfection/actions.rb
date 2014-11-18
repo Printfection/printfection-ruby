@@ -15,7 +15,7 @@ module Printfection
 
     module List
       module ClassMethods
-        def list
+        def all
           Printfection.get(self.url).map do |response|
             new response
           end

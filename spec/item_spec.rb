@@ -37,7 +37,7 @@ module Printfection
     end
   end
 
-  describe Item, ".list" do
+  describe Item, ".all" do
     it "returns an array of Items" do
       data1, data2 = double, double
       item1, item2 = double, double
@@ -46,7 +46,7 @@ module Printfection
       expect(Item).to receive(:new).with(data1).and_return(item1)
       expect(Item).to receive(:new).with(data2).and_return(item2)
 
-      expect(Item.list).to eql [item1, item2]
+      expect(Item.all).to eql [item1, item2]
     end
   end
 
