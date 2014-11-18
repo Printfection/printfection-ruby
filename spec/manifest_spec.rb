@@ -5,20 +5,52 @@ module Printfection
     let(:json) do
       JSON.parse <<-JSON
         {
-          "lineitems": [],
           "subtotal": 0,
           "coupon": 0,
           "tax": 0,
           "shipping": 0,
           "fulfillment": 0,
           "total": 0,
-          "shipments": [],
           "created_at": "2014-09-12T10:22:37Z",
           "received_at": null,
           "approved_at": null,
           "processed_at": null,
           "shipped_at": null,
-          "completed_at": null
+          "completed_at": null,
+          "lineitems": [
+            {
+              "id": 1,
+              "object": "lineitem",
+              "order_id": 1,
+              "item_id": 2,
+              "size_id": 3,
+              "quantity": 4,
+              "created_at": "2014-09-12T10:22:37Z"
+            },
+            {
+              "id": 2,
+              "object": "lineitem",
+              "order_id": 1,
+              "item_id": 2,
+              "size_id": 3,
+              "quantity": 4,
+              "created_at": "2014-09-12T10:22:37Z"
+            }
+          ],
+          "shipments": [
+            {
+              "carrier": "UPS",
+              "method": "Ground",
+              "tracking_number": "12345678",
+              "created_at": "2014-09-12T10:22:37Z"
+            },
+            {
+              "carrier": "FedEx",
+              "method": "2DA",
+              "tracking_number": "90123456",
+              "created_at": "2014-09-12T10:22:37Z"
+            }
+          ]
         }
       JSON
     end
@@ -37,20 +69,14 @@ module Printfection
       expect(manifest.processed_at).to eql nil
       expect(manifest.shipped_at).to eql nil
       expect(manifest.completed_at).to eql nil
-    end
-  end
 
-  describe Manifest, "#lineitems" do
-    it "returns the manifest's lineitems" do
-      pending
-      fail
-    end
-  end
+      expect(manifest.line_items).to be_an Array
+      expect(manifest.line_items.count).to eql 2
+      expect(manifest.line_items.first).to be_a LineItem
 
-  describe Manifest, "#order" do
-    it "returns the manifest's shipments" do
-      pending
-      fail
+      expect(manifest.shipments).to be_an Array
+      expect(manifest.shipments.count).to eql 2
+      expect(manifest.shipments.first).to be_a Hashie::Mash
     end
   end
 end

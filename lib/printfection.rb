@@ -11,11 +11,11 @@ require "printfection/address"
 require "printfection/product"
 require "printfection/size"
 require "printfection/image"
-require "printfection/item"
 require "printfection/campaign"
+require "printfection/item"
+require "printfection/line_item"
 require "printfection/manifest"
 require "printfection/order"
-require "printfection/line_item"
 
 module Printfection
   extend API

@@ -41,26 +41,5 @@ module Printfection
       expect(line_item.created_at).to eql DateTime.parse("2014-09-12T10:22:37Z")
     end
   end
-
-  describe LineItem, "#order" do
-    it "returns the Order this line item belongs to" do
-      pending
-      fail
-    end
-  end
-
-  describe LineItem, "#item" do
-    it "returns the Item this line item belongs to" do
-      pending
-      fail
-    end
-  end
-
-  describe LineItem, "#size" do
-    it "returns the Size of the item in this lineitem" do
-      pending
-      fail
-    end
-  end
 end
 

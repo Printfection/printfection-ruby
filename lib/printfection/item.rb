@@ -12,8 +12,13 @@ module Printfection
     coerce_key :product, Product
 
     property :campaigns
+    coerce_key :campaigns, Array[Campaign]
+
     property :sizes
+    coerce_key :sizes, Array[Size]
+
     property :images
+    coerce_key :images, Array[Image]
 
     def self.url
       "/items"

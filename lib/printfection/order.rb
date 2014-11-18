@@ -16,6 +16,7 @@ module Printfection
     property :gift_message
 
     property :line_items, from: :lineitems
+    coerce_key :line_items, Array[LineItem]
 
     property :ship_to
     coerce_key :ship_to, Address
@@ -25,6 +26,10 @@ module Printfection
 
     def self.url
       "/orders"
+    end
+
+    def campaign
+      Campaign.retrieve(campaign_id)
     end
 
     def place

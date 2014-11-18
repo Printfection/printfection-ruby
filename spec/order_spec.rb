@@ -39,22 +39,73 @@ module Printfection
              "zip": "80202",
              "country": "United States"
           },
-          "lineitems": [],
+          "lineitems": [
+            {
+              "id": 1,
+              "object": "lineitem",
+              "order_id": 1,
+              "item_id": 2,
+              "size_id": 3,
+              "quantity": 4,
+              "created_at": "2014-09-12T10:22:37Z"
+            },
+            {
+              "id": 2,
+              "object": "lineitem",
+              "order_id": 1,
+              "item_id": 2,
+              "size_id": 3,
+              "quantity": 4,
+              "created_at": "2014-09-12T10:22:37Z"
+            }
+          ],
           "manifest": {
-            "lineitems": [],
             "subtotal": 0,
             "coupon": 0,
             "tax": 0,
             "shipping": 0,
             "fulfillment": 0,
             "total": 0,
-            "shipments": [],
             "created_at": "2014-09-12T10:22:37Z",
             "received_at": null,
             "approved_at": null,
             "processed_at": null,
             "shipped_at": null,
-            "completed_at": null
+            "completed_at": null,
+            "lineitems": [
+              {
+                "id": 1,
+                "object": "lineitem",
+                "order_id": 1,
+                "item_id": 2,
+                "size_id": 3,
+                "quantity": 4,
+                "created_at": "2014-09-12T10:22:37Z"
+              },
+              {
+                "id": 2,
+                "object": "lineitem",
+                "order_id": 1,
+                "item_id": 2,
+                "size_id": 3,
+                "quantity": 4,
+                "created_at": "2014-09-12T10:22:37Z"
+              }
+            ],
+            "shipments": [
+              {
+                "carrier": "UPS",
+                "method": "Ground",
+                "tracking_number": "12345678",
+                "created_at": "2014-09-12T10:22:37Z"
+              },
+              {
+                "carrier": "FedEx",
+                "method": "2DA",
+                "tracking_number": "90123456",
+                "created_at": "2014-09-12T10:22:37Z"
+              }
+            ]
           }
         }
       JSON
@@ -72,13 +123,10 @@ module Printfection
 
       expect(order.ship_to).to be_an Address
       expect(order.manifest).to be_a Manifest
-    end
-  end
 
-  describe Order, "#line_items" do
-    it "returns an array of the order's line_items" do
-      pending
-      fail
+      expect(order.line_items).to be_an Array
+      expect(order.line_items.count).to eql 2
+      expect(order.line_items.first).to be_a LineItem
     end
   end
 
@@ -101,8 +149,12 @@ module Printfection
 
   describe Order, "#campaign" do
     it "returns the order's Campaign" do
-      pending
-      fail
+      campaign = double
+      allow(Campaign).to receive(:retrieve).
+                         with(123).
+                         and_return(campaign)
+      order = Order.new(campaign_id: 123)
+      expect(order.campaign).to eql campaign
     end
   end
 
