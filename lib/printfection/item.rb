@@ -7,17 +7,16 @@ module Printfection
     property :name
     property :color
     property :created_at, transform_with: lambda { |v| DateTime.parse(v) }
+
     property :product
+    coerce_key :product, Product
+
     property :campaigns
     property :sizes
     property :images
 
     def self.url
       "/items"
-    end
-
-    def product
-      Product.new(data[:product])
     end
   end
 end

@@ -39,13 +39,7 @@ module Printfection
       expect(item.name).to eql "My Awesome T-Shirt"
       expect(item.color).to eql "Green"
       expect(item.created_at).to eql DateTime.parse("2014-09-12T10:22:37Z")
-    end
-  end
-
-  describe Item, "#product" do
-    it "returns a Product instance with information about the item's root product" do
-      pending
-      fail
+      expect(item.product).to be_a Product
     end
   end
 
