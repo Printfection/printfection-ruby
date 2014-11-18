@@ -1,6 +1,21 @@
 require 'printfection'
 
 module Printfection
+  describe Order do
+    it_behaves_like "Resource"
+    include_examples "Actions::Retrieve"
+    include_examples "Actions::List"
+    include_examples "Actions::Create"
+    include_examples "Actions::Update"
+    include_examples "Actions::Delete"
+  end
+
+  describe Order, ".url" do
+    it "returns the base resource url" do
+      expect(Order.url).to eql "/orders"
+    end
+  end
+
   describe Order, "attributes" do
     it "exposes its id" do
       expect(Order).to expose_integer :id
@@ -30,61 +45,6 @@ module Printfection
       expect(Order).to expose :gift_message
     end
   end
-end
-
-
-module Printfection
-  describe Order, ".retrieve" do
-    it "returns the Order for the given id" do
-      data = double
-      order = double
-      expect(Printfection).to receive(:get).with("/orders/123").and_return(data)
-      expect(Order).to receive(:new).with(data).and_return(order)
-      expect(Order.retrieve(123)).to eql order
-    end
-  end
-
-  describe Order, ".all" do
-    it "returns an array of Orders" do
-      data1, data2 = double, double
-      order1, order2 = double, double
-
-      expect(Printfection).to receive(:get).with("/orders").and_return([data1, data2])
-      expect(Order).to receive(:new).with(data1).and_return(order1)
-      expect(Order).to receive(:new).with(data2).and_return(order2)
-
-      expect(Order.all).to eql [order1, order2]
-    end
-  end
-
-  describe Order, "#create" do
-    it "creates, saves, and returns a new Order with the data" do
-      params = double
-      response = double
-      new_order = double
-
-      expect(Printfection).to receive(:post).
-                              with("/orders", params).
-                              and_return(response)
-
-      expect(Order).to receive(:new).
-                       with(response).
-                       and_return(new_order)
-
-      order = Order.create(params)
-      expect(order).to eql new_order
-    end
-  end
-
-  describe Order, "#save" do
-    it "performs a patch with the data" do
-      order = Order.new(:id => 123)
-      order.gift_message = "My awesome gift message!"
-      expect(Printfection).to receive(:patch).
-                              with("/orders/123", {:gift_message => "My awesome gift message!"})
-      order.save
-    end
-  end
 
   describe Order, "#place" do
     it "performs a post to place the order" do
@@ -95,16 +55,8 @@ module Printfection
     end
   end
 
-  describe Order, "#delete" do
-    it "performs a delete on the order" do
-      order = Order.new(:id => 123)
-      expect(Printfection).to receive(:delete).with("/orders/123")
-      order.delete
-    end
-  end
-
   describe Order, "#cancel" do
-    it "deletds the order" do
+    it "deletes the order" do
       order = Order.new(:id => 123)
       expect(order).to receive(:delete)
       order.cancel

@@ -1,6 +1,12 @@
 require 'printfection'
 
 module Printfection
+  describe Item do
+    it_behaves_like "Resource"
+    include_examples "Actions::Retrieve"
+    include_examples "Actions::List"
+  end
+
   describe Item, ".url" do
     it "returns the base resource url" do
       expect(Item.url).to eql "/items"
@@ -22,31 +28,6 @@ module Printfection
 
     it "exposes its created_at" do
       expect(Item).to expose_datetime :created_at
-    end
-  end
-end
-
-module Printfection
-  describe Item, ".retrieve" do
-    it "returns the Item for the given id" do
-      data = double
-      item = double
-      expect(Printfection).to receive(:get).with("/items/123").and_return(data)
-      expect(Item).to receive(:new).with(data).and_return(item)
-      expect(Item.retrieve(123)).to eql item
-    end
-  end
-
-  describe Item, ".all" do
-    it "returns an array of Items" do
-      data1, data2 = double, double
-      item1, item2 = double, double
-
-      expect(Printfection).to receive(:get).with("/items").and_return([data1, data2])
-      expect(Item).to receive(:new).with(data1).and_return(item1)
-      expect(Item).to receive(:new).with(data2).and_return(item2)
-
-      expect(Item.all).to eql [item1, item2]
     end
   end
 
