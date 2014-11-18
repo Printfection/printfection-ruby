@@ -1,8 +1,9 @@
 module Printfection
   class Image < Resource
-    expose :id,     :as => :integer, :readonly => true
-    expose :name,   :as => :string, :readonly => true
-    expose :assets, :as => :object, :readonly => true
+    property :id, transform_with: lambda { |v| v.to_i }
+    property :name
+    property :assets
+    coerce_key :assets, Hashie::Mash
   end
 end
 

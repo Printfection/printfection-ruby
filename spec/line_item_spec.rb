@@ -15,29 +15,30 @@ module Printfection
     end
   end
 
-  describe LineItem, "attributes" do
-    it "exposes its id" do
-      expect(LineItem).to expose_integer :id
+  describe LineItem, "properties" do
+
+    let(:json) do
+      JSON.parse <<-JSON
+        {
+          "id": 123,
+          "object": "lineitem",
+          "order_id": 1,
+          "item_id": 1,
+          "size_id": 2,
+          "quantity": 3,
+          "created_at": "2014-09-12T10:22:37Z"
+        }
+      JSON
     end
 
-    it "exposes its order_id" do
-      expect(LineItem).to expose_integer :order_id
-    end
-
-    it "exposes its item_id" do
-      expect(LineItem).to expose_integer :item_id
-    end
-
-    it "exposes its size_id" do
-      expect(LineItem).to expose_integer :size_id
-    end
-
-    it "exposes its quantity" do
-      expect(LineItem).to expose_integer :quantity
-    end
-
-    it "exposes its created_at" do
-      expect(LineItem).to expose_datetime :created_at
+    it "gives access to JSON properties" do
+      line_item = LineItem.new(json)
+      expect(line_item.id).to eql 123
+      expect(line_item.order_id).to eql 1
+      expect(line_item.item_id).to eql 1
+      expect(line_item.size_id).to eql 2
+      expect(line_item.quantity).to eql 3
+      expect(line_item.created_at).to eql DateTime.parse("2014-09-12T10:22:37Z")
     end
   end
 

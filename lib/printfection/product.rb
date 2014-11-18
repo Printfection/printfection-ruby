@@ -1,7 +1,7 @@
 module Printfection
   class Product < Resource
-    expose :id,   :as => :integer, :readonly => true
-    expose :name, :as => :string,  :readonly => true
+    property :id, transform_with: lambda { |v| v.to_i }
+    property :name
   end
 end
 

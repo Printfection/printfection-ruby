@@ -13,33 +13,31 @@ module Printfection
     end
   end
 
-  describe Campaign, "attributes" do
-    it "exposes its id" do
-      expect(Campaign).to expose_integer :id
+  describe Campaign, "properties" do
+    let(:json) do
+      JSON.parse <<-JSON
+        {
+          "id": 1,
+          "object": "campaign",
+          "type": "giveaway",
+          "name": "My Awesome Giveaway Campaign",
+          "active": true,
+          "archived": false,
+          "url": "https://get.printfection.com/i8kbn/6651657281",
+          "created_at": "2014-09-12T10:22:37Z"
+        }
+      JSON
     end
 
-    it "exposes its name" do
-      expect(Campaign).to expose_string :name
-    end
-
-    it "exposes its type" do
-      expect(Campaign).to expose_string :type
-    end
-
-    it "exposes its created_at" do
-      expect(Campaign).to expose_datetime :created_at
-    end
-
-    it "exposes its active" do
-      expect(Campaign).to expose_boolean :active
-    end
-
-    it "exposes its archived" do
-      expect(Campaign).to expose_boolean :archived
-    end
-
-    it "exposes its url" do
-      expect(Campaign).to expose_string :url
+    it "gives access to JSON properties" do
+      campaign = Campaign.new(json)
+      expect(campaign.id).to eql 1
+      expect(campaign.type).to eql "giveaway"
+      expect(campaign.name).to eql "My Awesome Giveaway Campaign"
+      expect(campaign.active).to eql true
+      expect(campaign.archived).to eql false
+      expect(campaign.url).to eql "https://get.printfection.com/i8kbn/6651657281"
+      expect(campaign.created_at).to eql DateTime.parse("2014-09-12T10:22:37Z")
     end
   end
 end

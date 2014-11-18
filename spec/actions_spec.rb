@@ -8,9 +8,9 @@ module Printfection
     include Actions::Update
     include Actions::Delete
 
-    expose :id
-    expose :size
-    expose :quantity
+    property :id
+    property :size
+    property :quantity
 
     def self.url
       "/widgets"
@@ -65,7 +65,7 @@ module Printfection
       widget = Widget.new(:id => 123, :size => "Medium", :quantity => 5)
       widget.size = "Large"
       expect(Printfection).to receive(:patch).
-                              with("/widgets/123", {:size => "Large"})
+                              with("/widgets/123", {"size" => "Large"})
       widget.save
     end
   end

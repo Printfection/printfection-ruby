@@ -16,33 +16,69 @@ module Printfection
     end
   end
 
-  describe Order, "attributes" do
-    it "exposes its id" do
-      expect(Order).to expose_integer :id
+  describe Order, "properties" do
+    let(:json) do
+      JSON.parse <<-JSON
+        {
+          "id": 1,
+          "object": "order",
+          "campaign_id": 2,
+          "status": "open",
+          "code": "nhou890o",
+          "url": "https://printfection.com/nhou890o",
+          "gift": false,
+          "gift_message": "",
+          "created_at": "2014-09-12T10:22:37Z",
+          "ship_to": {
+             "name": "Joseph Schmo",
+             "address": "123 Main Street",
+             "address2": "Suite 101",
+             "company": "ACME Inc.",
+             "city": "Denver",
+             "state": "Colorado",
+             "zip": "80202",
+             "country": "United States"
+          },
+          "lineitems": [],
+          "manifest": {
+            "lineitems": [],
+            "subtotal": 0,
+            "coupon": 0,
+            "tax": 0,
+            "shipping": 0,
+            "fulfillment": 0,
+            "total": 0,
+            "shipments": [],
+            "created_at": "2014-09-12T10:22:37Z",
+            "received_at": null,
+            "approved_at": null,
+            "processed_at": null,
+            "shipped_at": null,
+            "completed_at": null
+          }
+        }
+      JSON
     end
 
-    it "exposes its campaign_id" do
-      expect(Order).to expose_integer :campaign_id
-    end
+    it "gives access to JSON properties" do
+      order = Order.new(json)
+      expect(order.id).to eql 1
+      expect(order.campaign_id).to eql 2
+      expect(order.created_at).to eql DateTime.parse("2014-09-12T10:22:37Z")
+      expect(order.code).to eql "nhou890o"
+      expect(order.url).to eql "https://printfection.com/nhou890o"
+      expect(order.gift).to eql false
+      expect(order.gift_message).to eql ""
 
-    it "exposes its created_at" do
-      expect(Order).to expose_datetime :created_at
+      expect(order.ship_to).to be_a Address
+      expect(order.manifest).to be_a Manifest
     end
+  end
 
-    it "exposes its code" do
-      expect(Order).to expose :code
-    end
-
-    it "exposes its url" do
-      expect(Order).to expose :url
-    end
-
-    it "exposes its gift" do
-      expect(Order).to expose_boolean :gift
-    end
-
-    it "exposes its gift_message" do
-      expect(Order).to expose :gift_message
+  describe Order, "#line_items" do
+    it "returns an array of the order's line_items" do
+      pending
+      fail
     end
   end
 
@@ -67,13 +103,6 @@ module Printfection
     it "returns the order's Campaign" do
       pending
       fail
-    end
-  end
-
-  describe Order, "#status" do
-    it "returns the order's status" do
-      order = Order.new status: "open"
-      expect(order.status).to eql "open"
     end
   end
 
@@ -188,49 +217,6 @@ module Printfection
     it "returns false when the order's status is not 'completed'" do
       order = Order.new status: "open"
       expect(order.completed?).to eql false
-    end
-  end
-
-  describe Order, "#ship_to" do
-    it "returns an object with details about the order's shipping address" do
-      order = Order.new ship_to: {
-        name:     "Joseph Schmo",
-        address:  "123 Main Street",
-        address2: "Suite 101",
-        company:  "ACME Inc.",
-        city:     "Denver",
-        state:    "Colorado",
-        zip:      "80202",
-        country:  "United States"
-      }
-
-      expect(order.ship_to.name).to eql "Joseph Schmo"
-      expect(order.ship_to.address).to eql "123 Main Street"
-      expect(order.ship_to.address2).to eql "Suite 101"
-      expect(order.ship_to.company).to eql "ACME Inc."
-      expect(order.ship_to.city).to eql "Denver"
-      expect(order.ship_to.state).to eql "Colorado"
-      expect(order.ship_to.zip).to eql "80202"
-      expect(order.ship_to.country).to eql "United States"
-    end
-  end
-
-  describe Order, "#line_items" do
-    it "returns an array of the order's line_items" do
-      pending
-      fail
-    end
-  end
-
-  describe Order, "#manifest" do
-    it "returns the order's manifest" do
-      manifest = double
-      manifest_data = double
-      order = Order.new manifest: manifest_data
-      expect(Manifest).to receive(:new).
-                          with(manifest_data).
-                          and_return(manifest)
-      expect(order.manifest).to eql manifest
     end
   end
 end

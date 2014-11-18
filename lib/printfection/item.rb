@@ -3,10 +3,14 @@ module Printfection
     include Actions::Retrieve
     include Actions::List
 
-    expose :id,         :as => :integer,  :readonly => true
-    expose :name,       :as => :string,   :readonly => true
-    expose :color,      :as => :string,   :readonly => true
-    expose :created_at, :as => :datetime, :readonly => true
+    property :id, transform_with: lambda { |v| v.to_i }
+    property :name
+    property :color
+    property :created_at, transform_with: lambda { |v| DateTime.parse(v) }
+    property :product
+    property :campaigns
+    property :sizes
+    property :images
 
     def self.url
       "/items"

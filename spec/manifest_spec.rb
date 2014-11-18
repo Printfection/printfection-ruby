@@ -1,49 +1,56 @@
 require 'printfection'
 
 module Printfection
-  describe Manifest, "attributes" do
-    it "exposes its subtotal" do
-      expect(Manifest).to expose_float :subtotal
+  describe Manifest, "properties" do
+    let(:json) do
+      JSON.parse <<-JSON
+        {
+          "lineitems": [],
+          "subtotal": 0,
+          "coupon": 0,
+          "tax": 0,
+          "shipping": 0,
+          "fulfillment": 0,
+          "total": 0,
+          "shipments": [],
+          "created_at": "2014-09-12T10:22:37Z",
+          "received_at": null,
+          "approved_at": null,
+          "processed_at": null,
+          "shipped_at": null,
+          "completed_at": null
+        }
+      JSON
     end
 
-    it "exposes its coupon" do
-      expect(Manifest).to expose_float :coupon
+    it "gives access to JSON properties" do
+      manifest = Manifest.new(json)
+      expect(manifest.subtotal).to eql 0.0
+      expect(manifest.coupon).to eql 0.0
+      expect(manifest.tax).to eql 0.0
+      expect(manifest.shipping).to eql 0.0
+      expect(manifest.fulfillment).to eql 0.0
+      expect(manifest.total).to eql 0.0
+      expect(manifest.created_at).to eql DateTime.parse("2014-09-12T10:22:37Z")
+      expect(manifest.received_at).to eql nil
+      expect(manifest.approved_at).to eql nil
+      expect(manifest.processed_at).to eql nil
+      expect(manifest.shipped_at).to eql nil
+      expect(manifest.completed_at).to eql nil
     end
+  end
 
-    it "exposes its tax" do
-      expect(Manifest).to expose_float :tax
+  describe Manifest, "#lineitems" do
+    it "returns the manifest's lineitems" do
+      pending
+      fail
     end
+  end
 
-    it "exposes its shipping" do
-      expect(Manifest).to expose_float :shipping
-    end
-
-    it "exposes its total" do
-      expect(Manifest).to expose_float :total
-    end
-
-    it "exposes its created_at" do
-      expect(Manifest).to expose_datetime :created_at
-    end
-
-    it "exposes its received_at" do
-      expect(Manifest).to expose_datetime :received_at
-    end
-
-    it "exposes its approved_at" do
-      expect(Manifest).to expose_datetime :approved_at
-    end
-
-    it "exposes its processed_at" do
-      expect(Manifest).to expose_datetime :processed_at
-    end
-
-    it "exposes its shipped_at" do
-      expect(Manifest).to expose_datetime :shipped_at
-    end
-
-    it "exposes its completed_at" do
-      expect(Manifest).to expose_datetime :completed_at
+  describe Manifest, "#order" do
+    it "returns the manifest's shipments" do
+      pending
+      fail
     end
   end
 end

@@ -5,12 +5,12 @@ module Printfection
     include Actions::Update
     include Actions::Delete
 
-    expose :id,         :as => :integer, :readonly => true
-    expose :order_id,   :as => :integer
-    expose :item_id,    :as => :integer
-    expose :size_id,    :as => :integer
-    expose :quantity,   :as => :integer
-    expose :created_at, :as => :datetime, :readonly => true
+    property :id,         transform_with: lambda { |v| v.to_i }
+    property :order_id,   transform_with: lambda { |v| v.to_i }
+    property :item_id,    transform_with: lambda { |v| v.to_i }
+    property :size_id,    transform_with: lambda { |v| v.to_i }
+    property :quantity,   transform_with: lambda { |v| v.to_i }
+    property :created_at, transform_with: lambda { |v| DateTime.parse(v) }
 
     def self.url
       "/lineitems"

@@ -1,9 +1,10 @@
 module Printfection
   class Size < Resource
-    expose :id,   :as => :integer,      :readonly => true
-    expose :name, :as => :string,       :readonly => true
-    expose :short_name, :as => :string, :readonly => true
-    expose :stock, :as => :object,      :readonly => true
+    property :id, transform_with: lambda { |v| v.to_i }
+    property :name
+    property :short_name
+    property :stock
+    coerce_key :stock, Hashie::Mash
   end
 end
 

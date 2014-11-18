@@ -13,33 +13,39 @@ module Printfection
     end
   end
 
-  describe Item, "attributes" do
-    it "exposes its id" do
-      expect(Item).to expose_integer :id
+  describe Item, "properties" do
+    let(:json) do
+      JSON.parse <<-JSON
+        {
+          "id": 1,
+          "object": "item",
+          "name": "My Awesome T-Shirt",
+          "color": "Green",
+          "product": {
+            "id": 123,
+            "name": "American Apparel 50/50 T-Shirt"
+          },
+          "created_at": "2014-09-12T10:22:37Z",
+          "campaigns": [],
+          "sizes": [],
+          "images": []
+        }
+      JSON
     end
 
-    it "exposes its name" do
-      expect(Item).to expose_string :name
-    end
-
-    it "exposes its color" do
-      expect(Item).to expose_string :color
-    end
-
-    it "exposes its created_at" do
-      expect(Item).to expose_datetime :created_at
+    it "gives access to JSON properties" do
+      item = Item.new(json)
+      expect(item.id).to eql 1
+      expect(item.name).to eql "My Awesome T-Shirt"
+      expect(item.color).to eql "Green"
+      expect(item.created_at).to eql DateTime.parse("2014-09-12T10:22:37Z")
     end
   end
 
   describe Item, "#product" do
     it "returns a Product instance with information about the item's root product" do
-      product = double
-      product_data = double
-      item = Item.new product: product_data
-      expect(Product).to receive(:new).
-                         with(product_data).
-                         and_return(product)
-      expect(item.product).to eql product
+      pending
+      fail
     end
   end
 

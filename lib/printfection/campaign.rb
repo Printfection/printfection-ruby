@@ -1,15 +1,16 @@
 module Printfection
   class Campaign < Resource
+    include Hashie::Extensions::Coercion
     include Actions::Retrieve
     include Actions::List
 
-    expose :id,         :as => :integer,  :readonly => true
-    expose :name,       :as => :string
-    expose :type,       :as => :string,   :readonly => true
-    expose :created_at, :as => :datetime, :readonly => true
-    expose :active,     :as => :boolean,  :readonly => true
-    expose :archived,   :as => :boolean,  :readonly => true
-    expose :url, :readonly => true
+    property :id, transform_with: lambda { |v| v.to_i }
+    property :name
+    property :type, transform_with: lambda { |v| v.downcase }
+    property :active
+    property :archived
+    property :url
+    property :created_at, transform_with: lambda { |v| DateTime.parse(v) }
 
     def self.url
       "/campaigns"

@@ -6,14 +6,22 @@ module Printfection
     include Actions::Update
     include Actions::Delete
 
-    expose :id,           :as => :integer, :readonly => true
-    expose :campaign_id,  :as => :integer
-    expose :created_at,   :as => :datetime, :readonly => true
-    expose :code,         :readonly => true
-    expose :url,          :readonly => true
-    expose :gift,         :as => :boolean
-    expose :gift_message
-    expose :ship_to,      :as => :object
+    property :id,          transform_with: lambda { |v| v.to_i }
+    property :campaign_id, transform_with: lambda { |v| v.to_i }
+    property :created_at,  transform_with: lambda { |v| DateTime.parse(v) }
+    property :status,      transform_with: lambda { |v| v.downcase }
+    property :code
+    property :url
+    property :gift
+    property :gift_message
+
+    property :line_items, from: :lineitems
+
+    property :ship_to
+    coerce_key :ship_to, Address
+
+    property :manifest
+    coerce_key :manifest, Manifest
 
     def self.url
       "/orders"
@@ -37,10 +45,6 @@ module Printfection
       "shipped"   => 4,
       "completed" => 5
     }
-
-    def status
-      data[:status].downcase
-    end
 
     def status_code
       STATUS_CODES[status]
@@ -72,10 +76,6 @@ module Printfection
 
     def completed?
       status_code == 5
-    end
-
-    def manifest
-      Manifest.new(data[:manifest])
     end
 
   end
