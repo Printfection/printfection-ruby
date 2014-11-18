@@ -70,7 +70,7 @@ module Printfection
       expect(order.gift).to eql false
       expect(order.gift_message).to eql ""
 
-      expect(order.ship_to).to be_a Address
+      expect(order.ship_to).to be_an Address
       expect(order.manifest).to be_a Manifest
     end
   end
