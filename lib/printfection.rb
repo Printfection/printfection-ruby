@@ -4,7 +4,6 @@ require "restclient"
 
 require "printfection/version"
 require "printfection/error"
-require "printfection/util"
 require "printfection/api"
 require "printfection/resource"
 require "printfection/actions"
