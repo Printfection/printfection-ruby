@@ -1,7 +1,5 @@
-if ENV["COVERAGE"]
-  require 'simplecov'
-  SimpleCov.start
-end
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
 
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f}
 

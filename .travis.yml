@@ -8,4 +8,7 @@ rvm:
 notifications:
   recipients:
     - rubygems@printfection.com
+addons:
+  code_climate:
+    repo_token: f5302e71ac67e807b7762e7ac743d2779841a422ab5c2cf1e7c7c34b6c080881
 
