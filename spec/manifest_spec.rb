@@ -6,7 +6,6 @@ module Printfection
       JSON.parse <<-JSON
         {
           "subtotal": 0,
-          "coupon": 0,
           "tax": 0,
           "shipping": 0,
           "fulfillment": 0,
@@ -58,7 +57,6 @@ module Printfection
     it "gives access to JSON properties" do
       manifest = Manifest.new(json)
       expect(manifest.subtotal).to eql 0.0
-      expect(manifest.coupon).to eql 0.0
       expect(manifest.tax).to eql 0.0
       expect(manifest.shipping).to eql 0.0
       expect(manifest.fulfillment).to eql 0.0

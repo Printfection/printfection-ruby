@@ -1,7 +1,6 @@
 module Printfection
   class Manifest < Resource
     property :subtotal,     transform_with: lambda { |v| v.to_f }
-    property :coupon,       transform_with: lambda { |v| v.to_f }
     property :tax,          transform_with: lambda { |v| v.to_f }
     property :shipping,     transform_with: lambda { |v| v.to_f }
     property :fulfillment,  transform_with: lambda { |v| v.to_f }

@@ -63,7 +63,6 @@ module Printfection
           ],
           "manifest": {
             "subtotal": 0,
-            "coupon": 0,
             "tax": 0,
             "shipping": 0,
             "fulfillment": 0,
