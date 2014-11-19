@@ -1,7 +1,7 @@
 module Printfection
   class LineItem < Resource
-    include Actions::Retrieve
-    include Actions::Create
+    extend Actions::Retrieve
+    extend Actions::Create
     include Actions::Update
     include Actions::Delete
 

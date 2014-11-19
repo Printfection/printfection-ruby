@@ -1,8 +1,8 @@
 module Printfection
   class Campaign < Resource
     include Hashie::Extensions::Coercion
-    include Actions::Retrieve
-    include Actions::List
+    extend Actions::Retrieve
+    extend Actions::List
 
     property :id, transform_with: lambda { |v| v.to_i }
     property :name

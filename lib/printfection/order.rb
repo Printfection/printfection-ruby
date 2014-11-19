@@ -1,8 +1,8 @@
 module Printfection
   class Order < Resource
-    include Actions::Retrieve
-    include Actions::List
-    include Actions::Create
+    extend Actions::Retrieve
+    extend Actions::List
+    extend Actions::Create
     include Actions::Update
     include Actions::Delete
 

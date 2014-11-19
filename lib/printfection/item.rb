@@ -1,7 +1,7 @@
 module Printfection
   class Item < Resource
-    include Actions::Retrieve
-    include Actions::List
+    extend Actions::Retrieve
+    extend Actions::List
 
     property :id, transform_with: lambda { |v| v.to_i }
     property :name
