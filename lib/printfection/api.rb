@@ -5,24 +5,24 @@ module Printfection
 
     attr_accessor :api_token
 
-    def get(url="/", params={})
-      request :get, url, params
+    def get(uri="/", params={})
+      request :get, uri, params
     end
 
-    def post(url, data={})
-      request :post, url, data
+    def post(uri, data={})
+      request :post, uri, data
     end
 
-    def patch(url, data={})
-      request :patch, url, data
+    def patch(uri, data={})
+      request :patch, uri, data
     end
 
-    def delete(url)
-      request :delete, url
+    def delete(uri)
+      request :delete, uri
     end
 
-    def request(verb, url, params={})
-      url = expand_url(url)
+    def request(verb, uri, params={})
+      url = uri_to_url(uri)
 
       begin
         response = case verb
@@ -85,9 +85,10 @@ module Printfection
 
     private
 
-    def expand_url(url)
-      url = [ENDPOINT.chomp("/"), url.chomp("/").reverse.chomp("/").reverse].join("/")
-      "#{PROTOCOL}://#{api_token}:@#{url}"
+    def uri_to_url(uri)
+      uri = [ENDPOINT.chomp("/"), uri.chomp("/").reverse.chomp("/").reverse].join("/")
+      url = "#{PROTOCOL}://#{api_token}:@#{uri}"
+      return url
     end
 
   end

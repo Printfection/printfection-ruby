@@ -109,7 +109,7 @@ module Printfection
     end
 
     context "when it is a DELETE request" do
-      it "performs a delete on the url" do
+      it "performs a delete on the uri" do
         expect(RestClient).to receive(:delete).
                               with("https://MY-API-TOKEN:@api.printfection.com/v2/path/to/resource/123").
                               and_return(double(:body => "{}"))

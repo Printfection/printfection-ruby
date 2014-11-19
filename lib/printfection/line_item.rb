@@ -12,7 +12,7 @@ module Printfection
     property :quantity,   transform_with: lambda { |v| v.to_i }
     property :created_at, transform_with: lambda { |v| DateTime.parse(v) }
 
-    def self.url
+    def self.uri
       "/lineitems"
     end
 

@@ -9,9 +9,9 @@ module Printfection
     include_examples "Actions::Delete"
   end
 
-  describe LineItem, ".url" do
-    it "returns the base resource url" do
-      expect(LineItem.url).to eql "/lineitems"
+  describe LineItem, ".uri" do
+    it "returns the base resource uri" do
+      expect(LineItem.uri).to eql "/lineitems"
     end
   end
 

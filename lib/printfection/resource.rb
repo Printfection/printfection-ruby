@@ -9,6 +9,10 @@ module Printfection
       @_old = self.dup
     end
 
+    def uri
+      [self.class.uri, id].join("/")
+    end
+
     def changes
       keys.inject({}) do |diff, key|
         unless self[key] == @_old[key]

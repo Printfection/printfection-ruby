@@ -12,7 +12,7 @@ module Printfection
     property :size
     property :quantity
 
-    def self.url
+    def self.uri
       "/widgets"
     end
   end

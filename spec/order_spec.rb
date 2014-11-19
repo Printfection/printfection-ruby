@@ -10,9 +10,9 @@ module Printfection
     include_examples "Actions::Delete"
   end
 
-  describe Order, ".url" do
-    it "returns the base resource url" do
-      expect(Order.url).to eql "/orders"
+  describe Order, ".uri" do
+    it "returns the base resource uri" do
+      expect(Order.uri).to eql "/orders"
     end
   end
 

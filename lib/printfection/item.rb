@@ -20,7 +20,7 @@ module Printfection
     property :images
     coerce_key :images, Array[Image]
 
-    def self.url
+    def self.uri
       "/items"
     end
   end

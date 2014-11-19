@@ -7,9 +7,9 @@ module Printfection
     include_examples "Actions::List"
   end
 
-  describe Campaign, ".url" do
-    it "returns the base resource url" do
-      expect(Campaign.url).to eql "/campaigns"
+  describe Campaign, ".uri" do
+    it "returns the base resource uri" do
+      expect(Campaign.uri).to eql "/campaigns"
     end
   end
 

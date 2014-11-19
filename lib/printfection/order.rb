@@ -24,7 +24,7 @@ module Printfection
     property :manifest
     coerce_key :manifest, Manifest
 
-    def self.url
+    def self.uri
       "/orders"
     end
 
