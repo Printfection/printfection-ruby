@@ -33,7 +33,8 @@ module Printfection
         parent:   self,
         children: self[:line_items],
         path:     '/lineitems',
-        keys:     {:id => :order_id}
+        keys:     {:id => :order_id},
+        actions:  [Actions::Retrieve, Actions::Create]
       )
     end
 

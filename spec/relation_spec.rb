@@ -35,6 +35,30 @@ module Printfection
       expect(relation.first).to eql({title: "Book 1", author_id: 1})
       expect(relation.last).to eql({title: "Book 2", author_id: 1})
     end
+
+    it "includes the provided actions" do
+      parent   = double.as_null_object
+      children = double.as_null_object
+
+      action1 = Module.new do
+        def action1_action
+        end
+      end
+
+      action2 = Module.new do
+        def action2_action
+        end
+      end
+
+      relation = Relation.new(
+        parent:   parent,
+        children: children,
+        actions:  [action1, action2]
+      )
+
+      expect(relation).to respond_to :action1_action
+      expect(relation).to respond_to :action2_action
+    end
   end
 
   describe Relation, "#uri" do

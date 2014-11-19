@@ -4,11 +4,16 @@ module Printfection
     extend Forwardable
     def_delegators :@children, :each, :first, :last, :size, :count, :length
 
-    def initialize(parent:, children:, path:, keys:)
+    def initialize(parent:, children:, path:"", keys:{}, actions:[])
       @parent   = parent
       @children = children
       @path     = path
       @keys     = keys
+      @actions  = actions
+
+      @actions.each do |mod|
+        self.extend(mod)
+      end
 
       @keys.each do |primary, foreign|
         children.each { |child| child[foreign] = parent[primary] }
