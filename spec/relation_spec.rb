@@ -76,5 +76,29 @@ module Printfection
       expect(relation.uri).to eql "/authors/1/books"
     end
   end
+
+  describe Relation, "#new" do
+    it "invokes the constructor of the child class and returns the result" do
+      author = double(:author, uri: "/authors/1").as_null_object
+      books = [{title: "Book 1"}, {title: "Book 2"}]
+
+      klass = Class.new
+      instance = double
+
+      relation = Relation.new(
+        parent:   author,
+        children: books,
+        klass:    klass,
+        path:     '/books',
+        keys:     {:id => :author_id}
+      )
+
+      expect(klass).to receive(:new).
+                       with({id: 123, age: 12, quantity: 100}).
+                       and_return(instance)
+
+      expect(relation.new({id: 123, age: 12, quantity: 100})).to eql instance
+    end
+  end
 end
 

@@ -32,6 +32,7 @@ module Printfection
       Relation.new(
         parent:   self,
         children: self[:line_items],
+        klass:    LineItem,
         path:     '/lineitems',
         keys:     {:id => :order_id},
         actions:  [Actions::Retrieve, Actions::Create]
