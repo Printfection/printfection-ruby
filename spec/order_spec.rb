@@ -37,7 +37,9 @@ module Printfection
              "city": "Denver",
              "state": "Colorado",
              "zip": "80202",
-             "country": "United States"
+             "country": "United States",
+             "email": "joseph.schmo@example.com",
+             "phone": "751-166-2910"
           },
           "lineitems": [
             {

@@ -8,6 +8,8 @@ module Printfection
     property :state
     property :zip_code, from: :zip
     property :country
+    property :email
+    property :phone
   end
 end
 
