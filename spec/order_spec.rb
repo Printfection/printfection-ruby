@@ -124,7 +124,8 @@ module Printfection
       expect(order.ship_to).to be_an Address
       expect(order.manifest).to be_a Manifest
 
-      expect(order.line_items).to be_an Array
+      expect(order.line_items).to be_a Relation
+      expect(order.line_items.uri).to eql "/orders/1/lineitems"
       expect(order.line_items.count).to eql 2
       expect(order.line_items.first).to be_a LineItem
     end

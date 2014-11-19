@@ -1,10 +1,12 @@
 require "json"
 require "hashie"
 require "restclient"
+require "forwardable"
 
 require "printfection/version"
 require "printfection/error"
 require "printfection/api"
+require "printfection/relation"
 require "printfection/resource"
 require "printfection/actions"
 require "printfection/address"

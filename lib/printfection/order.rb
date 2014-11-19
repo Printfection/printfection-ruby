@@ -28,6 +28,15 @@ module Printfection
       "/orders"
     end
 
+    def line_items
+      Relation.new(
+        parent:   self,
+        children: self[:line_items],
+        path:     '/lineitems',
+        keys:     {:id => :order_id}
+      )
+    end
+
     def campaign
       Campaign.retrieve(campaign_id)
     end
