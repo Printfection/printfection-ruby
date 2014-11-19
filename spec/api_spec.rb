@@ -128,7 +128,7 @@ module Printfection
     context "when it is successful" do
       let(:raw_json)    { double(:raw_json) }
       let(:response)    { double(:response, :body => raw_json) }
-      let(:parsed_json) { double(:parsed_json) }
+      let(:parsed_json) { double(:parsed_json).as_null_object }
 
       before do
         allow(RestClient).to receive(:get).
@@ -146,6 +146,32 @@ module Printfection
         it "returns the parsed JSON" do
           json = client.request(:get, "/path/to/resource/123", page: 5)
           expect(json).to eql parsed_json
+        end
+      end
+
+      context "when it is a list object" do
+        let(:list_element1) { double }
+        let(:list_element2) { double }
+
+        let(:parsed_json_list_object) do
+          {
+            "object" => "list",
+            "data" => [
+              list_element1,
+              list_element2
+            ]
+          }
+        end
+
+        before do
+          allow(JSON).to receive(:parse).
+            with(raw_json).
+            and_return(parsed_json_list_object)
+        end
+
+        it "returns the data property from the parsed json" do
+          json = client.request(:get, "/path/to/resource/123", page: 5)
+          expect(json).to eql [list_element1, list_element2]
         end
       end
 

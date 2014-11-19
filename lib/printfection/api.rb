@@ -39,7 +39,12 @@ module Printfection
         end
 
         json = JSON.parse(response.body)
-        return json
+
+        if json["object"] == "list" and json.has_key? "data"
+          return json["data"]
+        else
+          return json
+        end
 
         # At this point, some exception has been raised either
         # during the request or parsing the response.
