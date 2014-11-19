@@ -1,6 +1,15 @@
 require 'printfection'
 
 module Printfection
+  describe API, ".api_token=" do
+    let(:client) { Object.new.extend(API) }
+
+    it "sets the api token" do
+      client.api_token = "e3ce1ddf152d5533ca4a3d3543006bac6d57b2ac"
+      expect(client.api_token).to eql "e3ce1ddf152d5533ca4a3d3543006bac6d57b2ac"
+    end
+  end
+
   describe API, "#get" do
     let(:client) { Object.new.extend(API) }
 

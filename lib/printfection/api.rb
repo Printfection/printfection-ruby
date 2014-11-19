@@ -1,6 +1,7 @@
 module Printfection
   module API
     BASE_URL = "https://api.printfection.com/v2/"
+    attr_accessor :api_token
 
     def get(url="/", params={})
       request :get, url, params
