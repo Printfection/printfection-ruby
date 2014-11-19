@@ -1,5 +1,7 @@
-require "codeclimate-test-reporter"
-CodeClimate::TestReporter.start
+unless ENV['CODECLIMATE_REPO_TOKEN'].nil?
+  require "codeclimate-test-reporter"
+  CodeClimate::TestReporter.start
+end
 
 Dir["./spec/support/**/*.rb"].sort.each { |f| require f}
 
