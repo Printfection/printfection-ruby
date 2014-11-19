@@ -24,12 +24,14 @@ module Printfection
     module Update
       def save
         Printfection.patch self.uri, changes
+        true
       end
     end
 
     module Delete
       def delete
         Printfection.delete self.uri
+        true
       end
     end
 
