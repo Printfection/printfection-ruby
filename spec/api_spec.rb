@@ -5,13 +5,17 @@ module Printfection
     let(:client) { Object.new.extend(API) }
 
     it "sets the api token" do
-      client.api_token = "e3ce1ddf152d5533ca4a3d3543006bac6d57b2ac"
-      expect(client.api_token).to eql "e3ce1ddf152d5533ca4a3d3543006bac6d57b2ac"
+      client.api_token = "MY-API-TOKEN"
+      expect(client.api_token).to eql "MY-API-TOKEN"
     end
   end
 
   describe API, "#get" do
     let(:client) { Object.new.extend(API) }
+
+    before do
+      client.api_token = "MY-API-TOKEN"
+    end
 
     it "returns the response data of a GET request" do
       response_data = double
@@ -25,6 +29,10 @@ module Printfection
   describe API, "#post" do
     let(:client) { Object.new.extend(API) }
 
+    before do
+      client.api_token = "MY-API-TOKEN"
+    end
+
     it "returns the response data of a POST request" do
       response_data = double
       expect(client).to receive(:request).
@@ -36,6 +44,10 @@ module Printfection
 
   describe API, "#patch" do
     let(:client) { Object.new.extend(API) }
+
+    before do
+      client.api_token = "MY-API-TOKEN"
+    end
 
     it "returns the response data of a PATCH request" do
       response_data = double
@@ -49,6 +61,10 @@ module Printfection
   describe API, "#delete" do
     let(:client) { Object.new.extend(API) }
 
+    before do
+      client.api_token = "MY-API-TOKEN"
+    end
+
     it "returns the response data of a DELETE request" do
       response_data = double
       expect(client).to receive(:request).
@@ -61,10 +77,14 @@ module Printfection
   describe API, "#request" do
     let(:client) { Object.new.extend(API) }
 
+    before do
+      client.api_token = "MY-API-TOKEN"
+    end
+
     context "when it is a GET request" do
       it "performs a get with the params" do
         expect(RestClient).to receive(:get).
-                              with("https://api.printfection.com/v2/path/to/resource/123", {:params => {:page => 5}, :accept => :json}).
+                              with("https://MY-API-TOKEN:@api.printfection.com/v2/path/to/resource/123", {:params => {:page => 5}, :accept => :json}).
                               and_return(double(:body => "{}"))
         client.request(:get, "/path/to/resource/123", page: 5)
       end
@@ -73,7 +93,7 @@ module Printfection
     context "when it is a POST request" do
       it "performs a post with the params" do
         expect(RestClient).to receive(:post).
-                              with("https://api.printfection.com/v2/path/to/resource/123", {page: 5}.to_json, {:accept => :json, :content_type => :json}).
+                              with("https://MY-API-TOKEN:@api.printfection.com/v2/path/to/resource/123", {page: 5}.to_json, {:accept => :json, :content_type => :json}).
                               and_return(double(:body => "{}"))
         client.request(:post, "/path/to/resource/123", {page: 5})
       end
@@ -82,7 +102,7 @@ module Printfection
     context "when it is a PATCH request" do
       it "performs a patch with the params" do
         expect(RestClient).to receive(:patch).
-                              with("https://api.printfection.com/v2/path/to/resource/123", {page: 5}.to_json, {:accept => :json, :content_type => :json}).
+                              with("https://MY-API-TOKEN:@api.printfection.com/v2/path/to/resource/123", {page: 5}.to_json, {:accept => :json, :content_type => :json}).
                               and_return(double(:body => "{}"))
         client.request(:patch, "/path/to/resource/123", {page: 5})
       end
@@ -91,7 +111,7 @@ module Printfection
     context "when it is a DELETE request" do
       it "performs a delete on the url" do
         expect(RestClient).to receive(:delete).
-                              with("https://api.printfection.com/v2/path/to/resource/123").
+                              with("https://MY-API-TOKEN:@api.printfection.com/v2/path/to/resource/123").
                               and_return(double(:body => "{}"))
         client.request(:delete, "/path/to/resource/123")
       end
@@ -112,7 +132,7 @@ module Printfection
 
       before do
         allow(RestClient).to receive(:get).
-          with("https://api.printfection.com/v2/path/to/resource/123", {:params => {:page => 5}, :accept => :json}).
+          with("https://MY-API-TOKEN:@api.printfection.com/v2/path/to/resource/123", {:params => {:page => 5}, :accept => :json}).
           and_return(response)
       end
 

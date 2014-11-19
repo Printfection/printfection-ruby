@@ -1,6 +1,8 @@
 module Printfection
   module API
-    BASE_URL = "https://api.printfection.com/v2/"
+    PROTOCOL = "https"
+    ENDPOINT = "api.printfection.com/v2/"
+
     attr_accessor :api_token
 
     def get(url="/", params={})
@@ -20,9 +22,9 @@ module Printfection
     end
 
     def request(verb, url, params={})
-      begin
-        url = [BASE_URL.chomp("/"), url.chomp("/").reverse.chomp("/").reverse].join("/")
+      url = expand_url(url)
 
+      begin
         response = case verb
         when :get
           RestClient.get url, :params => params, :accept => :json
@@ -74,6 +76,13 @@ module Printfection
         # Re-raise a generic error.
         raise Error, "Something went wrong. Please try again."
       end
+    end
+
+    private
+
+    def expand_url(url)
+      url = [ENDPOINT.chomp("/"), url.chomp("/").reverse.chomp("/").reverse].join("/")
+      "#{PROTOCOL}://#{api_token}:@#{url}"
     end
 
   end
