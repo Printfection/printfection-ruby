@@ -8,8 +8,8 @@ module Printfection
     end
 
     module List
-      def all
-        Printfection.get(self.uri).map do |response|
+      def all(params={})
+        Printfection.get(self.uri, params).map do |response|
           new response
         end
       end

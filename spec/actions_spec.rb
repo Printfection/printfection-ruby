@@ -33,11 +33,13 @@ module Printfection
       json_data1, json_data2 = double, double
       widget1, widget2 = double, double
 
-      expect(Printfection).to receive(:get).with("/widgets").and_return([json_data1, json_data2])
+      expect(Printfection).to receive(:get).
+                              with("/widgets", {offset: 10, limit: 5}).
+                              and_return([json_data1, json_data2])
       expect(Widget).to receive(:new).with(json_data1).and_return(widget1)
       expect(Widget).to receive(:new).with(json_data2).and_return(widget2)
 
-      expect(Widget.all).to eql [widget1, widget2]
+      expect(Widget.all(offset: 10, limit: 5)).to eql [widget1, widget2]
     end
   end
 
