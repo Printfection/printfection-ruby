@@ -21,19 +21,19 @@ module Printfection
       expect(titles).to eql ["Book 1", "Book 2"]
     end
 
-    it "transforms the parent keys onto the children" do
-      author   = {id: 1}
+    it "applies the parent keys to the children" do
+      author   = {id: 1, name: "Mark Twain"}
       books    = [{title: "Book 1"}, {title: "Book 2"}]
 
       relation = Relation.new(
         parent:   author,
         children: books,
         path:     '/books',
-        keys:     {:id => :author_id}
+        keys:     {:id => :author_id, :name => :author_name}
       )
 
-      expect(relation.first).to eql({title: "Book 1", author_id: 1})
-      expect(relation.last).to eql({title: "Book 2", author_id: 1})
+      expect(relation.first).to eql({title: "Book 1", author_id: 1, author_name: "Mark Twain"})
+      expect(relation.last).to eql({title: "Book 2", author_id: 1, author_name: "Mark Twain"})
     end
 
     it "includes the provided actions" do
@@ -83,7 +83,7 @@ module Printfection
       books = [{title: "Book 1"}, {title: "Book 2"}]
 
       klass = Class.new
-      instance = double
+      instance = double.as_null_object
 
       relation = Relation.new(
         parent:   author,
@@ -98,6 +98,25 @@ module Printfection
                        and_return(instance)
 
       expect(relation.new({id: 123, age: 12, quantity: 100})).to eql instance
+    end
+
+    it "applies the parent keys to the new instance" do
+      author = {id: 1, name: "Mark Twain"}
+
+      relation = Relation.new(
+        parent:   author,
+        klass:    Hashie::Mash,
+        keys:     {:id  => :author_id, :name => :author_name}
+      )
+
+      instance = relation.new({
+        id: 2,
+        author_id: 2
+      })
+
+      expect(instance[:id]).to eql 2
+      expect(instance[:author_id]).to eql 1
+      expect(instance[:author_name]).to eql "Mark Twain"
     end
   end
 end
