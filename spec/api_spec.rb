@@ -117,14 +117,6 @@ module Printfection
       end
     end
 
-    context "when it is an invalid http request verb" do
-      it "raises an exception" do
-        expect {
-          client.request(:invalid_request_type, "/path/to/resource/123")
-        }.to raise_error Error, "Unknown HTTP verb: 'invalid_request_type'"
-      end
-    end
-
     context "when it is successful" do
       let(:raw_json)    { double(:raw_json) }
       let(:response)    { double(:response, :body => raw_json) }

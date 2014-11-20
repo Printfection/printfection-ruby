@@ -2,7 +2,7 @@ module Printfection
   module API
     ENDPOINT = "api.printfection.com/v2/"
 
-    attr_accessor :api_token
+    attr_accessor :api_token, :test_mode
 
     def get(uri="/", params={})
       request :get, uri, params
@@ -21,41 +21,40 @@ module Printfection
     end
 
     def request(verb, uri, params={})
-      uri = Util.join_uri(ENDPOINT, uri)
-      url = "https://#{api_token}:@#{uri}"
+      perform_request do
+        uri = Util.join_uri(ENDPOINT, uri)
+        url = "https://#{api_token}:@#{uri}"
 
-      begin
         response = case verb
-        when :get
-          RestClient.get url, :params => params, :accept => :json
-        when :post
-          RestClient.post url, params.to_json, :accept => :json, :content_type => :json
-        when :patch
-          RestClient.patch url, params.to_json, :accept => :json, :content_type => :json
-        when :delete
-          RestClient.delete url
-        else
-          raise RequestError, "Unknown HTTP verb: '#{verb}'"
+        when :get;    RestClient.get url, :params => params, :accept => :json
+        when :post;   RestClient.post url, params.to_json, :accept => :json, :content_type => :json
+        when :patch;  RestClient.patch url, params.to_json, :accept => :json, :content_type => :json
+        when :delete; RestClient.delete url
         end
 
         json = JSON.parse(response.body)
 
         if json["object"] == "list" and json.has_key? "data"
-          return json["data"]
+          json["data"]
         else
-          return json
+          json
         end
+      end
+    end
+
+    private
+
+    def perform_request(&block)
+      return yield if test_mode
+
+      begin
+        yield
 
         # At this point, some exception has been raised either
         # during the request or parsing the response.
         #
         # We determine the type of error, and re-raise
         # our own error from the message in the response body.
-      rescue RequestError => e
-        # This error happens somewhere between the internal API and RestClient,
-        # before the request is ever sent.
-        # Re-wrap as a generic Error with the same message.
-        raise Error, e.message
       rescue RestClient::Exception => e
         # We likely got a http status code outside the 200-399 range.
         # If this is a GET or DELETE request, it is likely the resource is not owned by the client.
