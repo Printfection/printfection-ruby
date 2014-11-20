@@ -28,25 +28,29 @@ module Printfection
       end
 
       children.each do |child|
-        apply_keys(child)
+        apply_relation(child)
       end
     end
 
     def uri
-      [parent.uri, path].join("/").gsub("//", "/")
+      [parent.uri, path].join("/").gsub(/\/{2,}/, "/")
     end
 
     def new(*args)
       child = klass.new(*args)
-      apply_keys(child)
+      apply_relation(child)
       return child
     end
 
     private
 
-    def apply_keys(child)
+    def apply_relation(child)
       keys.each do |primary, foreign|
         child[foreign] = parent[primary]
+      end
+
+      if child.respond_to? :relation=
+        child.relation = self
       end
     end
 

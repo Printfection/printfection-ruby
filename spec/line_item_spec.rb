@@ -16,7 +16,6 @@ module Printfection
   end
 
   describe LineItem, "properties" do
-
     let(:json) do
       JSON.parse <<-JSON
         {

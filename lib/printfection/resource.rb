@@ -2,7 +2,10 @@ module Printfection
   class Resource < Hashie::Trash
     include Hashie::Extensions::IndifferentAccess
     include Hashie::Extensions::Coercion
+
     property :object
+
+    attr_accessor :relation
 
     def initialize(*args)
       super
@@ -10,7 +13,8 @@ module Printfection
     end
 
     def uri
-      [self.class.uri, id].join("/")
+      base = self.relation.nil? ? self.class.uri : self.relation.uri
+      [base, self.id].join("/").gsub(/\/{2,}/, "/")
     end
 
     def changes

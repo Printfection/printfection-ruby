@@ -1,19 +1,42 @@
 require 'printfection'
 
+module Printfection
+  describe Resource, "relation" do
+    it "saves its relation" do
+      relation = double
+      resource = Resource.new
+      resource.relation = relation
+      expect(resource.relation).to eql relation
+    end
+  end
+end
 
 module Printfection
   describe Resource, "#uri" do
-    it "returns its class's uri joined with its id" do
-      klass = Class.new(Resource) do
+    let(:widget_klass) do
+      Class.new(Resource) do
         property :id
 
         def self.uri
           "/widgets"
         end
       end
+    end
 
-      resource = klass.new(id: 123)
-      expect(resource.uri).to eql "/widgets/123"
+    context "when it does not have a relation" do
+      it "returns its class's uri joined with its id" do
+        widget = widget_klass.new(id: 123)
+        expect(widget.uri).to eql "/widgets/123"
+      end
+    end
+
+    context "when it has a relation" do
+      it "returns its relations's uri joined with its id" do
+        relation = double(:uri => "/manufacturers/123/widgets")
+        widget = widget_klass.new(id: 456)
+        widget.relation = relation
+        expect(widget.uri).to eql "/manufacturers/123/widgets/456"
+      end
     end
   end
 end

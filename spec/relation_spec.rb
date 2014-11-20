@@ -36,6 +36,25 @@ module Printfection
       expect(relation.last).to eql({title: "Book 2", author_id: 1, author_name: "Mark Twain"})
     end
 
+    it "applies the relation to the childrenance" do
+      book_klass = Class.new(Resource) do
+        property :title
+        property :author_id
+        property :author_name
+      end
+
+      author   = {id: 1, name: "Mark Twain"}
+      books    = [book_klass.new({title: "Book 1"}), book_klass.new({title: "Book 2"})]
+
+      relation = Relation.new(
+        children: books
+      )
+
+      expect(relation.first.relation).to eql relation
+      expect(relation.last.relation).to eql relation
+    end
+
+
     it "includes the provided actions" do
       parent   = double.as_null_object
       children = double.as_null_object
@@ -117,6 +136,18 @@ module Printfection
       expect(instance[:id]).to eql 2
       expect(instance[:author_id]).to eql 1
       expect(instance[:author_name]).to eql "Mark Twain"
+    end
+
+    it "applies the relation to the new instance" do
+      author = double(:author, :uri => "/authors/123").as_null_object
+
+      relation = Relation.new(
+        parent: author,
+        klass: Resource
+      )
+
+      instance = relation.new
+      expect(instance.relation).to eql relation
     end
   end
 end
