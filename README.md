@@ -4,7 +4,11 @@ Implementation of the [Printfection API](http://printfection.github.io/API-Docum
 
 At a high level, the Printfection API can be used to create, modify, place, and cancel orders. `Orders` are made up of a set of line items and a shipping address, but orders also expose detailed information about their products, sizes, images, quantities, and availability.
 
-`Campaigns` are logical groups of items used to organize your orders. All orders are always associated to exactly one campaign, and only items associated to a given campaign can be placed in an order in the same campaign. For example, your company's marketing department might have a Giveaway campaign with coffee mugs to reward loyal customers, and your engineering department might have a Purchase campaign with nerdy swag to outfit new hires. Some campaigns have special properties. Orders in `giveaway` and `freeforall` campaigns have a code and a web URL that can be used to redeem an order. A common use case for these campaigns is <some use case>. [Learn more about campaigns](http://printfection.com) or [view the Campaign object reference](http://printfection.github.io/API-Documentation/#campaigns)
+`Campaigns` are logical groups of items used to organize your orders. Orders are always associated to exactly one campaign, and only items associated to a given campaign can be placed in an order in the same campaign. For example, your company's marketing department might have a Giveaway campaign with coffee mugs to reward loyal customers, and your engineering department might have a Purchase campaign with nerdy swag to outfit new hires.
+
+Some campaigns have special abilities. Orders in `giveaway` and `freeforall` campaigns have a code and a web URL that can be used to redeem (i.e. place) that order. Orders in `freeforall` campaigns can be a gift and include a gift message.
+
+You can read the full API documentation and object reference [here](http://printfection.github.io/API-Documentation/#campaigns).
 
 
 ## Installation
