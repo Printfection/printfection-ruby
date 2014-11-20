@@ -4,6 +4,7 @@ require "restclient"
 require "forwardable"
 
 require "printfection/version"
+require "printfection/util"
 require "printfection/error"
 require "printfection/api"
 require "printfection/relation"

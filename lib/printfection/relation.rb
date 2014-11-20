@@ -33,7 +33,7 @@ module Printfection
     end
 
     def uri
-      [parent.uri, path].join("/").gsub(/\/{2,}/, "/")
+      Util.join_uri(parent.uri, path)
     end
 
     def new(*args)

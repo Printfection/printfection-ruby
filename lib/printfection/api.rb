@@ -22,7 +22,8 @@ module Printfection
     end
 
     def request(verb, uri, params={})
-      url = uri_to_url(uri)
+      uri = Util.join_uri(ENDPOINT, uri)
+      url = "https://#{api_token}:@#{uri}"
 
       begin
         response = case verb
@@ -81,14 +82,6 @@ module Printfection
         # Re-raise a generic error.
         raise Error, "Something went wrong. Please try again."
       end
-    end
-
-    private
-
-    def uri_to_url(uri)
-      uri = [ENDPOINT.chomp("/"), uri.chomp("/").reverse.chomp("/").reverse].join("/")
-      url = "#{PROTOCOL}://#{api_token}:@#{uri}"
-      return url
     end
 
   end

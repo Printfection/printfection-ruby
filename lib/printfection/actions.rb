@@ -3,7 +3,7 @@ module Printfection
 
     module Retrieve
       def retrieve(id)
-        new Printfection.get [self.uri, id].join("/")
+        new Printfection.get Util.join_uri(self.uri, id)
       end
     end
 

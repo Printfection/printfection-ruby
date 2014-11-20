@@ -14,7 +14,7 @@ module Printfection
 
     def uri
       base = self.relation.nil? ? self.class.uri : self.relation.uri
-      [base, self.id].join("/").gsub(/\/{2,}/, "/")
+      Util.join_uri(base, self.id)
     end
 
     def changes
