@@ -36,6 +36,22 @@ Printfection.api_token = "e3ce1ddf152d5533ca4a3d3543006bac6d57b2ac"
 
 If you're using Rails, `config/initializers/printfection.rb` is a good place for this.
 
+### Retrieving an order
+
+```ruby
+order = Printfection::Order.retrieve(5)
+```
+
+### Listing all orders
+
+```ruby
+orders = Printfection::Order.all
+orders = Printfection::Order.all limit: 5, offset: 10
+```
+
+By default, list calls are automatically paginated and limited to 100 objects per request.
+
+
 ### Creating an order
 
 At a minimum, a new order can be created with just a `campaign_id`:
