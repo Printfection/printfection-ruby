@@ -1,6 +1,5 @@
 module Printfection
   module API
-    PROTOCOL = "https"
     ENDPOINT = "api.printfection.com/v2/"
 
     attr_accessor :api_token
