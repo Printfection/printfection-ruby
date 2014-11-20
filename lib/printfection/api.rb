@@ -2,7 +2,7 @@ module Printfection
   module API
     ENDPOINT = "api.printfection.com/v2/"
 
-    attr_accessor :api_token, :test_mode
+    attr_accessor :api_token, :debug_mode
 
     def get(uri="/", params={})
       request :get, uri, params
@@ -45,7 +45,7 @@ module Printfection
     private
 
     def perform_request(&block)
-      return yield if test_mode
+      return yield if debug_mode
 
       begin
         yield
