@@ -44,7 +44,7 @@ module Printfection
     end
 
     def place
-      Printfection.post("/orders/#{id}/place")
+      Printfection.post Util.join_uri(uri, "/place")
     end
 
     def cancel
