@@ -29,7 +29,7 @@ module Printfection
     end
 
     def line_items
-      Relation.new(
+      @line_items ||= Relation.new(
         parent:   self,
         children: self[:line_items],
         klass:    LineItem,
@@ -40,7 +40,7 @@ module Printfection
     end
 
     def campaign
-      Campaign.retrieve(campaign_id)
+      @campaign ||= Campaign.retrieve(campaign_id)
     end
 
     def place

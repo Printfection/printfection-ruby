@@ -1,0 +1,123 @@
+<h1>Order #<%= @order.id %></h1>
+
+<p><a href="/orders">&laquo; All orders</a></p>
+
+<h3>Order Details</h3>
+
+<table class="table">
+  <tr>
+    <td><strong>ID</strong></td>
+    <td><%= @order.id %></td>
+  </tr>
+  <tr>
+    <td><strong>Campaign</strong></td>
+    <td><a href="/campaigns/<%= @order.campaign.id %>"><%= @order.campaign.name %></a></td>
+  </tr>
+  <tr>
+    <td><strong>Status</strong></td>
+    <td><%= @order.status %></td>
+  </tr>
+  <tr>
+    <td><strong>Code</strong></td>
+    <td><%= @order.code %></td>
+  </tr>
+  <tr>
+    <td><strong>URL</strong></td>
+    <td><%= @order.url %></td>
+  </tr>
+  <tr>
+    <td><strong>Gift</strong></td>
+    <td><%= @order.gift %></td>
+  </tr>
+  <tr>
+    <td><strong>Gift Message</strong></td>
+    <td><%= @order.gift_message %></td>
+  </tr>
+  <tr>
+    <td><strong>Date</strong></td>
+    <td><%= @order.created_at.strftime('%m/%d/%Y') %></td>
+  </tr>
+</table>
+
+<br />
+<br />
+
+<h3>Line Items</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th></th>
+      <th>Item</th>
+      <th>Size</th>
+      <th>Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @order.line_items.each do |line_item| %>
+      <tr>
+        <td>
+          <% line_item.item.assets.each do |asset| %>
+            <div>
+              <img src="<%= asset.url %>"  width="90" />
+              <%= asset.perspective %>
+            </div>
+          </div>
+          <% end %>
+        </td>
+        <td><%= line_item.item.name %> - <%= line_item.item.type %> - <%= line_item.item.color %></td>
+        <td><%= line_item.size.name %></td>
+        <td><%= line_item.quantity %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br /><br />
+
+<h3>Shipping Address</h3>
+
+<table class="table">
+  <tr>
+    <td><strong>Name</strong></td>
+    <td><%= @order.ship_to.name %></td>
+  </tr>
+  <tr>
+    <td><strong>Address</strong></td>
+    <td><%= @order.ship_to.address %></td>
+  </tr>
+  <tr>
+    <td><strong>Address 2</strong></td>
+    <td><%= @order.ship_to.address2 %></td>
+  </tr>
+  <tr>
+    <td><strong>Company</strong></td>
+    <td><%= @order.ship_to.company %></td>
+  </tr>
+  <tr>
+    <td><strong>City</strong></td>
+    <td><%= @order.ship_to.city %></td>
+  </tr>
+  <tr>
+    <td><strong>State</strong></td>
+    <td><%= @order.ship_to.state %></td>
+  </tr>
+  <tr>
+    <td><strong>Zip</strong></td>
+    <td><%= @order.ship_to.zip_code %></td>
+  </tr>
+  <tr>
+    <td><strong>Country</strong></td>
+    <td><%= @order.ship_to.country %></td>
+  </tr>
+  <tr>
+    <td><strong>Email</strong></td>
+    <td><%= @order.ship_to.email %></td>
+  </tr>
+  <tr>
+    <td><strong>Phone</strong></td>
+    <td><%= @order.ship_to.phone %></td>
+  </tr>
+</table>
+
+

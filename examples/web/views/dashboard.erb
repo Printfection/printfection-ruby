@@ -1,4 +1,29 @@
-<h1>Orders</h1>
+<h1>Campaigns</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Active</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @campaigns.each do |campaign| %>
+      <tr>
+        <td><a href="/campaigns/<%= campaign.id %>"><%= campaign.id %></a></td>
+        <td><%= campaign.name %></td>
+        <td><%= campaign.type %></td>
+        <td><%= campaign.active %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br /><br />
+
+<h1>Recent Orders</h1>
 
 <table class="table">
   <thead>
@@ -21,5 +46,5 @@
   </tbody>
 </table>
 
-<p><a href="/">&laquo; Dashboard</a></p>
+<p><a href="/orders">All orders &raquo;</a></p>
 

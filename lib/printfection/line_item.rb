@@ -16,6 +16,14 @@ module Printfection
       "/lineitems"
     end
 
+    def item
+      @item ||= Item.retrieve(item_id)
+    end
+
+    def size
+      @size ||= item.sizes.find { |s| s.id == size_id }
+    end
+
   end
 end
 

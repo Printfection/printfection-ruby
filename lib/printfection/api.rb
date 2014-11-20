@@ -2,7 +2,8 @@ module Printfection
   module API
     ENDPOINT = "api.printfection.com/v2/"
 
-    attr_accessor :api_token, :debug_mode
+    attr_accessor :api_token
+    attr_accessor :logger
 
     def get(uri="/", params={})
       request :get, uri, params
@@ -25,6 +26,10 @@ module Printfection
         uri = Util.join_uri(ENDPOINT, uri)
         url = "https://#{api_token}:@#{uri}"
 
+        unless logger.nil?
+          logger.info "[Printfection] #{verb.upcase} #{url}"
+        end
+
         response = case verb
         when :get;    RestClient.get url, :params => params, :accept => :json
         when :post;   RestClient.post url, params.to_json, :accept => :json, :content_type => :json
@@ -45,8 +50,6 @@ module Printfection
     private
 
     def perform_request(&block)
-      return yield if debug_mode
-
       begin
         yield
 
