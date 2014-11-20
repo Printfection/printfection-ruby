@@ -6,9 +6,9 @@ module Printfection
     include Actions::Update
     include Actions::Delete
 
-    property :id,          transform_with: lambda { |v| v.to_i }
-    property :campaign_id, transform_with: lambda { |v| v.to_i }
-    property :created_at,  transform_with: lambda { |v| DateTime.parse(v) }
+    property :id,          transform_with: Transforms::Integer
+    property :campaign_id, transform_with: Transforms::Integer
+    property :created_at,  transform_with: Transforms::Date
     property :status,      transform_with: lambda { |v| v.downcase }
     property :code
     property :url

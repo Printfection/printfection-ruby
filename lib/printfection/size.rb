@@ -1,6 +1,6 @@
 module Printfection
   class Size < Resource
-    property :id, transform_with: lambda { |v| v.to_i }
+    property :id, transform_with: Transforms::Integer
     property :name
     property :short_name
 

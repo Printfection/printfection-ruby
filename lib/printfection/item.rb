@@ -3,10 +3,10 @@ module Printfection
     extend Actions::Retrieve
     extend Actions::List
 
-    property :id, transform_with: lambda { |v| v.to_i }
+    property :id, transform_with: Transforms::Integer
     property :name
     property :color
-    property :created_at, transform_with: lambda { |v| DateTime.parse(v) }
+    property :created_at, transform_with: Transforms::Date
 
     property :product
     coerce_key :product, Product

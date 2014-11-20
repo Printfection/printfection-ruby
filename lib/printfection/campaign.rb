@@ -4,13 +4,13 @@ module Printfection
     extend Actions::Retrieve
     extend Actions::List
 
-    property :id, transform_with: lambda { |v| v.to_i }
+    property :id, transform_with: Transforms::Integer
     property :name
-    property :type, transform_with: lambda { |v| v.downcase }
+    property :type
     property :active
     property :archived
     property :url
-    property :created_at, transform_with: lambda { |v| DateTime.parse(v) }
+    property :created_at, transform_with: Transforms::Date
 
     def self.uri
       "/campaigns"
