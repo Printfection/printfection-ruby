@@ -1,5 +1,5 @@
 module Printfection
-  class Image < Resource
+  class Asset < Resource
     property :id, transform_with: Transforms::Integer
     property :name
     property :assets

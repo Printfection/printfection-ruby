@@ -68,23 +68,23 @@ module Printfection
               }
             }
           ],
-          "images": [
+          "assets": [
             {
               "id": 1,
-              "object": "image",
+              "object": "asset",
               "name": "front",
               "assets": {
-                "design": "https://images.printfection.com/xe90asdf.jpg",
-                "overlay": "https://images.printfection.com/xe90asdf.jpg"
+                "design": "https://assets.printfection.com/xe90asdf.jpg",
+                "overlay": "https://assets.printfection.com/xe90asdf.jpg"
               }
             },
             {
               "id": 1,
-              "object": "image",
+              "object": "asset",
               "name": "front",
               "assets": {
-                "design": "https://images.printfection.com/xe90asdf.jpg",
-                "overlay": "https://images.printfection.com/xe90asdf.jpg"
+                "design": "https://assets.printfection.com/xe90asdf.jpg",
+                "overlay": "https://assets.printfection.com/xe90asdf.jpg"
               }
             }
           ]
@@ -109,9 +109,9 @@ module Printfection
       expect(item.sizes.count).to eql 2
       expect(item.sizes.first).to be_a Size
 
-      expect(item.images).to be_an Array
-      expect(item.images.count).to eql 2
-      expect(item.images.first).to be_a Image
+      expect(item.assets).to be_an Array
+      expect(item.assets.count).to eql 2
+      expect(item.assets.first).to be_a Asset
     end
   end
 end
