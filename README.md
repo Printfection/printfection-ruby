@@ -2,7 +2,7 @@
 
 Implementation of the [Printfection API](http://printfection.github.io/API-Documentation) for Ruby.
 
-At a high level, the Printfection API can be used to create, modify, place, and cancel orders. `Orders` are made up of a set of line items and a shipping address, but orders also expose detailed information about their products, sizes, images, quantities, and availability.
+At a high level, the Printfection API can be used to create, modify, place, and cancel orders. `Orders` are made up of a set of line items and a shipping address, but orders also expose detailed information about their products, sizes, assets, quantities, and availability.
 
 `Campaigns` are logical groups of items used to organize your orders. Orders are always associated to exactly one campaign, and only items associated to a given campaign can be placed in an order in the same campaign. For example, your company's marketing department might have a Giveaway campaign with coffee mugs to reward loyal customers, and your engineering department might have a Purchase campaign with nerdy swag to outfit new hires.
 
@@ -171,8 +171,8 @@ item.campaigns
 item.sizes
   #=> [#<Printfection::Size id: 1 ...>, #<Printfection::Size id: 2 ...>]
 
-item.images
-  #=> [#<Printfection::Image id: 1 ...>, #<Printfection::Image id: 2 ...>]
+item.assets
+  #=> [#<Printfection::Asset id: 1 ...>, #<Printfection::Asset id: 2 ...>]
 
 ```
 

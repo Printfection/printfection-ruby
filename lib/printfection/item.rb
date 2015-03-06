@@ -4,6 +4,7 @@ module Printfection
     extend Actions::List
 
     property :id, transform_with: Transforms::Integer
+    property :type
     property :name
     property :color
     property :created_at, transform_with: Transforms::Date
@@ -17,8 +18,8 @@ module Printfection
     property :sizes
     coerce_key :sizes, Array[Size]
 
-    property :images
-    coerce_key :images, Array[Image]
+    property :assets
+    coerce_key :assets, Array[Asset]
 
     def self.uri
       "/items"
