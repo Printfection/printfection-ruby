@@ -72,20 +72,20 @@ module Printfection
             {
               "id": 1,
               "object": "asset",
-              "name": "front",
-              "assets": {
-                "design": "https://assets.printfection.com/xe90asdf.jpg",
-                "overlay": "https://assets.printfection.com/xe90asdf.jpg"
-              }
+              "type": "display",
+              "name": "AA-WhiteLogo-Front.png",
+              "perspective": "front",
+              "url": "https://img.printfection.com/18/26/234234lkajsdfdsf7/AA-WhiteLogo-Front.png",
+              "notes": ""
             },
             {
-              "id": 1,
+              "id": 2,
               "object": "asset",
-              "name": "front",
-              "assets": {
-                "design": "https://assets.printfection.com/xe90asdf.jpg",
-                "overlay": "https://assets.printfection.com/xe90asdf.jpg"
-              }
+              "type": "display",
+              "name": "AA-WhiteLogo-Back.png",
+              "perspective": "back",
+              "url": "https://img.printfection.com/18/26/234234lkajsdfdsf7/AA-WhiteLogo-Back.png",
+              "notes": ""
             }
           ]
         }

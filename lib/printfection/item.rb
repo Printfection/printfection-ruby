@@ -4,6 +4,7 @@ module Printfection
     extend Actions::List
 
     property :id, transform_with: Transforms::Integer
+    property :type
     property :name
     property :color
     property :created_at, transform_with: Transforms::Date
