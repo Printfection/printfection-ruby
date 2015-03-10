@@ -2,6 +2,7 @@ require "json"
 require "hashie"
 require "restclient"
 require "forwardable"
+require "date"
 
 require "printfection/version"
 require "printfection/util"
