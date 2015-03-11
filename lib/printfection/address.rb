@@ -6,7 +6,7 @@ module Printfection
     property :company
     property :city
     property :state
-    property :zip_code, from: :zip
+    property :zip
     property :country
     property :email
     property :phone
