@@ -13,7 +13,7 @@
     <% @orders.each do |order| %>
       <tr>
         <td><a href="/orders/<%= order.id %>"><%= order.id %></a></td>
-        <td><%= order.ship_to.name %>, <%= order.ship_to.city %>, <%= order.ship_to.state %> <%= order.ship_to.zip_code %></td>
+        <td><%= order.ship_to.name %>, <%= order.ship_to.city %>, <%= order.ship_to.state %> <%= order.ship_to.zip %></td>
         <td><%= order.status %></td>
         <td><a href="/campaigns/<%= order.campaign_id %>"><%= order.campaign.name %></a></td>
       </tr>
