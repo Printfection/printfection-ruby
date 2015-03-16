@@ -2,8 +2,16 @@ module Printfection
   module API
     ENDPOINT = "api.printfection.com/v2/"
 
-    attr_accessor :api_token
+    attr_writer :api_token
     attr_accessor :logger
+
+    def api_token
+      if @api_token.nil? || @api_token.strip.to_s.empty?
+        raise Error, "Missing API Key."
+      else
+        return @api_token
+      end
+    end
 
     def get(uri="/", params={})
       request :get, uri, params

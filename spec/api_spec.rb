@@ -1,12 +1,45 @@
 require 'printfection'
 
 module Printfection
-  describe API, ".api_token=" do
+  describe API, "#api_token=" do
     let(:client) { Object.new.extend(API) }
 
     it "sets the api token" do
       client.api_token = "MY-API-TOKEN"
       expect(client.api_token).to eql "MY-API-TOKEN"
+    end
+  end
+
+  describe API, "#api_token" do
+    context "when the API token has been set" do
+      it "returns the API token" do
+        client = Object.new.extend(API)
+        client.api_token = "MY-API-TOKEN"
+        expect(client.api_token).to eql "MY-API-TOKEN"
+      end
+    end
+
+    context "when the API token has not been set" do
+      it "raises an error" do
+        client = Object.new.extend(API)
+        expect { client.api_token }.to raise_error Printfection::Error, "Missing API Key."
+      end
+    end
+
+    context "when the API token is nil" do
+      it "raises an error" do
+        client = Object.new.extend(API)
+        client.api_token = nil
+        expect { client.api_token }.to raise_error Printfection::Error, "Missing API Key."
+      end
+    end
+
+    context "when the API token is empty" do
+      it "raises an error" do
+        client = Object.new.extend(API)
+        client.api_token = "   "
+        expect { client.api_token }.to raise_error Printfection::Error, "Missing API Key."
+      end
     end
   end
 
