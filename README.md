@@ -179,7 +179,7 @@ item.assets
 ### Listing all items
 
 ```ruby
-items = Printfection::Items.all
+items = Printfection::Item.all
   #=> [#<Printfection::Item id: 1 ...>, #<Printfection::Item id: 2 ...>]
 ```
 
