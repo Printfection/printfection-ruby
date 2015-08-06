@@ -231,7 +231,7 @@ end
 
 ## License
 
-[MIT](LICENCE.txt)
+[MIT](LICENSE.txt)
 
 ## Issues & Support
 
